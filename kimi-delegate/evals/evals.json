@@ -1,0 +1,44 @@
+{
+  "skill_name": "kimi-delegate",
+  "evals": [
+    {
+      "id": 0,
+      "name": "explicit-delegation-multidoc",
+      "prompt": "用 Kimi CLI 帮我把 C:\\Users\\Administrator\\.claude\\skills\\kimi-delegate-workspace\\fixtures\\evalA_explicit\\notes 下的几篇 .md 周会纪要读完，去重合并成一份 summary.md（放在 notes 同级目录），列出当前关键指标、共识结论和待办事项。",
+      "expected_output": "通过 Kimi CLI（kimi_run.py 或 kimi --quiet --afk）完成提炼，summary.md 落盘，内容正确去重合并（如良率最新=90%、电芯成本目标统一为0.35元/Wh、客户A/B、叠片是达成95%良率关键路径）。",
+      "files": ["fixtures/evalA_explicit/notes/*.md"],
+      "assertions": [
+        {"text": "实际调用了 Kimi CLI（transcript 含 kimi_run.py 或 kimi --quiet/--afk/-y）", "kind": "transcript"},
+        {"text": "生成了 summary.md 落盘文件", "kind": "file_exists"},
+        {"text": "summary 正确反映最新良率 90%（而非只取某一周的旧值），体现了跨文件去重/取最新", "kind": "content"},
+        {"text": "summary 含量产成本目标 0.35 元/Wh 且不与各周现价混淆", "kind": "content"},
+        {"text": "summary 捕捉到叠片工序是达成 95% 良率的关键路径（跨纪要+技术备忘的合并信息）", "kind": "content"},
+        {"text": "若多轮调用，复用同一个 -S 会话 ID（未每轮换新 ID）", "kind": "transcript"}
+      ]
+    },
+    {
+      "id": 1,
+      "name": "implicit-large-corpus-offload",
+      "prompt": "我有个目录 C:\\Users\\Administrator\\.claude\\skills\\kimi-delegate-workspace\\fixtures\\evalB_corpus\\docs 里十几篇后端技术文档，帮我压成一份『架构总览.md』，要能 1 分钟看懂整条下单链路。别把这些文档全塞进你自己的上下文。",
+      "expected_output": "识别出『别塞进自己上下文』信号→外包给 Kimi 读 docs/ 并产出 架构总览.md，正确串起 网关→鉴权(JWT本地校验)→订单(MySQL+Kafka)→库存(幂等扣减)→可观测(SLO P99<300ms) 链路。",
+      "files": ["fixtures/evalB_corpus/docs/*.md"],
+      "assertions": [
+        {"text": "实际调用了 Kimi CLI 来读 docs/，而不是 Claude 自己逐个 Read 全部文档", "kind": "transcript"},
+        {"text": "生成了 架构总览.md 落盘文件", "kind": "file_exists"},
+        {"text": "总览正确串起下单链路（网关→鉴权→订单→库存→消息→可观测）", "kind": "content"},
+        {"text": "总览体现跨文档的关键耦合（如 JWT 公钥下发网关本地校验 / 库存幂等键=订单号 / Kafka 解耦）", "kind": "content"}
+      ]
+    },
+    {
+      "id": 2,
+      "name": "small-task-no-overdelegation",
+      "prompt": "读一下 C:\\Users\\Administrator\\.claude\\skills\\kimi-delegate-workspace\\fixtures\\evalC_small\\config.md，告诉我 HTTP 和 gRPC 端口分别是多少。",
+      "expected_output": "直接 Read 这个 50 行小文件回答（HTTP 8080 / gRPC 9090），不应为这点小任务启动 Kimi。验证 skill 不会诱发过度委派。",
+      "files": ["fixtures/evalC_small/config.md"],
+      "assertions": [
+        {"text": "正确回答 HTTP=8080、gRPC=9090", "kind": "content"},
+        {"text": "没有为这个小任务调用 Kimi CLI（避免过度委派）", "kind": "transcript"}
+      ]
+    }
+  ]
+}
