@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{TOPIC}}产业链投研看板 · 2026-06-15</title>
+<style>
+:root{
+  --bg:#050a14;--panel:#0a1322;--panel2:#0f1a2e;--border:#1c2a44;
+  --text:#e8efff;--muted:#7a8caa;--accent:#3b82f6;--accent2:#60a5fa;
+  --warm:#fbbf24;--green:#10b981;--red:#ef4444;--yellow:#eab308;--purple:#a78bfa;--cyan:#22d3ee;
+  --g1:linear-gradient(135deg,#3b82f6,#60a5fa);
+  --g2:linear-gradient(135deg,#0ea5e9,#22d3ee);
+  --g3:linear-gradient(135deg,#a78bfa,#60a5fa);
+  --glow:0 0 18px rgba(59,130,246,0.22);
+  --glow2:0 0 14px rgba(34,211,238,0.18);
+  --glow3:0 0 18px rgba(167,139,250,0.20);
+  --radius:12px;--radius-sm:8px;
+}
+[data-theme="light"]{--bg:#f1f5fb;--panel:#fff;--panel2:#e6eef9;--border:#bfd1ea;--text:#0c1726;--muted:#4d5e7c;--accent:#1d4ed8;--accent2:#2563eb;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.6;font-size:14px;}
+.wrap{max-width:1340px;margin:0 auto;padding:24px 20px 80px;}
+
+/* ── Header ── */
+header{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--border);position:relative;}
+header::after{content:"";position:absolute;bottom:-1px;left:0;width:120px;height:2px;background:var(--g1);border-radius:2px;}
+h1{font-size:25px;font-weight:800;letter-spacing:.3px;background:var(--g1);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+h1 .sub{font-size:12.5px;font-weight:400;color:var(--muted);margin-left:10px;-webkit-text-fill-color:var(--muted);}
+.toolbar{display:flex;gap:8px;align-items:center;}
+.btn{background:var(--panel);border:1px solid var(--border);color:var(--text);padding:6px 14px;border-radius:20px;cursor:pointer;font-size:12.5px;transition:all .2s;}
+.btn:hover{border-color:var(--accent);color:var(--accent2);box-shadow:var(--glow);}
+
+/* ── Tabs ── */
+.tabs{display:flex;gap:2px;border-bottom:1px solid var(--border);margin-bottom:20px;flex-wrap:wrap;}
+.tab{padding:10px 20px;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;font-weight:500;font-size:13.5px;transition:all .18s;border-radius:8px 8px 0 0;}
+.tab:hover{color:var(--text);background:rgba(59,130,246,0.06);}
+.tab.active{color:var(--accent2);border-bottom-color:var(--accent);background:rgba(59,130,246,0.10);}
+.tab.serenity.active{color:var(--purple);border-bottom-color:var(--purple);background:rgba(167,139,250,0.10);}
+.panel{display:none;}.panel.active{display:block;}
+
+/* ── Hero ── */
+.hero{background:linear-gradient(135deg,var(--panel) 0%,rgba(28,42,68,0.8) 100%);border:1px solid var(--border);border-radius:var(--radius);padding:26px;margin-bottom:20px;position:relative;overflow:hidden;}
+.hero::before{content:"";position:absolute;top:-40px;right:-40px;width:200px;height:200px;background:radial-gradient(circle,rgba(59,130,246,0.10) 0%,transparent 70%);}
+.hero h2{font-size:17px;font-weight:700;margin-bottom:10px;background:var(--g1);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.hero .lead{color:var(--muted);font-size:13.5px;margin-bottom:22px;line-height:1.7;}
+.hero .lead em{color:var(--warm);font-style:normal;font-weight:700;}
+
+/* ── KPI Badges ── */
+.badges{display:grid;grid-template-columns:repeat(auto-fit,minmax(195px,1fr));gap:12px;}
+.badge{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:16px 16px 14px;position:relative;overflow:hidden;transition:all .2s;}
+.badge::before{content:"";position:absolute;inset:0;border-radius:var(--radius);padding:1px;background:var(--g1);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .3s;}
+.badge:hover::before{opacity:1;}
+.badge:hover{box-shadow:var(--glow);transform:translateY(-2px);}
+.badge .num{font-size:24px;font-weight:800;background:var(--g1);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1.2;}
+.badge .lbl{font-size:11.5px;color:var(--muted);margin-top:6px;line-height:1.4;}
+
+/* ── Cards & Grid ── */
+.grid{display:grid;gap:14px;}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:16px;transition:all .2s;}
+.card:hover{border-color:var(--accent);box-shadow:var(--glow);}
+
+/* ── Section Title ── */
+.section-title{font-size:15px;font-weight:700;margin:26px 0 12px;display:flex;align-items:center;gap:10px;letter-spacing:.3px;}
+.section-title::before{content:"";width:4px;height:16px;background:var(--g1);border-radius:2px;flex-shrink:0;}
+.section-title.serenity::before{background:var(--g3);}
+
+/* ── Chain ── */
+.chain{display:grid;grid-template-columns:1fr;gap:14px;}
+.chain-row{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:18px;}
+.chain-row h3{font-size:14.5px;margin-bottom:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-weight:700;}
+.chain-row .pct{background:rgba(251,191,36,0.12);color:var(--warm);border:1px solid rgba(251,191,36,0.3);padding:3px 11px;border-radius:20px;font-size:11.5px;font-weight:700;}
+.nodes{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;}
+.node{background:var(--panel2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:13px;cursor:pointer;transition:all .2s;position:relative;}
+.node::after{content:"→";position:absolute;right:10px;top:50%;transform:translateY(-50%);color:var(--accent);opacity:0;font-size:12px;transition:opacity .2s;}
+.node:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:var(--glow);}
+.node:hover::after{opacity:1;}
+.node h4{font-size:12.5px;margin-bottom:5px;color:var(--accent2);font-weight:700;}
+.node .desc{font-size:11.5px;color:var(--muted);line-height:1.5;}
+.arrow{text-align:center;color:var(--muted);font-size:20px;margin:2px 0;}
+
+/* ── Filters / Chips ── */
+.filters{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px;align-items:center;}
+.chip{background:var(--panel);border:1px solid var(--border);color:var(--muted);padding:4px 12px;border-radius:16px;cursor:pointer;font-size:12px;transition:all .18s;}
+.chip:hover{color:var(--text);border-color:var(--accent);}
+.chip.on{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600;}
+.search{background:var(--panel);border:1px solid var(--border);color:var(--text);padding:6px 12px;border-radius:8px;font-size:13px;width:200px;outline:none;transition:border-color .2s;}
+.search:focus{border-color:var(--accent);box-shadow:0 0 0 2px rgba(59,130,246,0.18);}
+
+/* ── Company Cards ── */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(335px,1fr));gap:14px;}
+.cc{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:0;cursor:pointer;transition:all .2s;overflow:hidden;}
+.cc::before{content:"";display:block;height:3px;background:var(--border);transition:background .2s;}
+.cc.tier-card-1::before{background:linear-gradient(90deg,var(--warm),rgba(251,191,36,0.3));}
+.cc.tier-card-2::before{background:linear-gradient(90deg,var(--accent),rgba(59,130,246,0.3));}
+.cc.tier-card-3::before{background:linear-gradient(90deg,var(--muted),rgba(122,140,170,0.2));}
+.cc:hover{border-color:var(--accent);box-shadow:var(--glow);transform:translateY(-2px);}
+.cc.unlisted{opacity:.82;border-style:dashed;}
+.cc-inner{padding:14px;}
+.cc-head{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:6px;}
+.cc-name{font-size:15px;font-weight:700;}
+.cc-code{font-size:11px;color:var(--muted);font-family:Menlo,Consolas,monospace;margin-top:2px;}
+.tier{display:inline-block;padding:2px 9px;border-radius:12px;font-size:11px;font-weight:700;letter-spacing:.3px;}
+.tier-1{background:rgba(251,191,36,0.16);color:var(--warm);border:1px solid rgba(251,191,36,0.3);}
+.tier-2{background:rgba(59,130,246,0.14);color:var(--accent2);border:1px solid rgba(59,130,246,0.3);}
+.tier-3{background:rgba(122,140,170,0.10);color:var(--muted);border:1px solid rgba(122,140,170,0.22);}
+.cc-quote{display:flex;gap:10px;font-size:11.5px;flex-wrap:wrap;margin:8px 0 4px;padding:8px;background:var(--panel2);border-radius:6px;}
+.cc-quote span{color:var(--muted);}
+.cc-quote b{color:var(--text);font-weight:600;margin-left:2px;}
+.up{color:#f87171;}.down{color:#34d399;}
+.cc-segment{font-size:10.5px;color:var(--muted);margin-bottom:6px;padding:2px 7px;background:rgba(59,130,246,0.08);border-radius:4px;display:inline-block;}
+.cc-hl{font-size:12.5px;color:var(--text);margin:8px 0;line-height:1.6;}
+.tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;}
+.tag{font-size:11px;padding:2px 8px;border-radius:10px;background:var(--bg);border:1px solid var(--border);color:var(--muted);}
+.tag.cust{background:rgba(59,130,246,0.10);border-color:rgba(59,130,246,0.4);color:var(--accent2);font-weight:600;}
+.tag.choke{background:rgba(167,139,250,0.12);border-color:rgba(167,139,250,0.4);color:var(--purple);font-weight:700;}
+.cc-detail{display:none;margin-top:10px;padding-top:10px;border-top:1px dashed var(--border);font-size:12px;color:var(--muted);}
+.cc.open .cc-detail{display:block;}
+.cc-detail li{margin-left:16px;margin-top:4px;}
+
+/* ── Valuation Tags ── */
+.vtag{display:inline-block;padding:1px 7px;border-radius:8px;font-size:10px;font-weight:700;margin-left:6px;vertical-align:middle;}
+.vtag.hot{background:rgba(239,68,68,0.18);color:#f87171;border:1px solid rgba(239,68,68,0.25);}
+.vtag.warm{background:rgba(251,191,36,0.14);color:var(--warm);border:1px solid rgba(251,191,36,0.25);}
+.vtag.fair{background:rgba(59,130,246,0.14);color:var(--accent2);border:1px solid rgba(59,130,246,0.25);}
+.vtag.low{background:rgba(16,185,129,0.14);color:#34d399;border:1px solid rgba(16,185,129,0.25);}
+
+/* ── 52W Position ── */
+.cc-pos{font-size:11px;color:var(--muted);margin:4px 0;display:flex;gap:14px;flex-wrap:wrap;}
+.cc-pos .bar{display:inline-block;width:56px;height:5px;border-radius:3px;background:var(--border);position:relative;vertical-align:middle;margin-left:4px;}
+.cc-pos .bar i{position:absolute;top:-2px;width:3px;height:9px;border-radius:1px;background:var(--accent2);}
+
+/* ── Stars ── */
+.cc-stars{font-size:11px;color:var(--warm);margin-top:3px;letter-spacing:1px;}
+
+/* ── Timeline ── */
+.tl{position:relative;padding-left:28px;}
+.tl::before{content:"";position:absolute;left:7px;top:12px;bottom:12px;width:2px;background:linear-gradient(to bottom,var(--accent),var(--border));}
+.tl-item{position:relative;margin-bottom:16px;}
+.tl-item::before{content:"";position:absolute;left:-24px;top:8px;width:12px;height:12px;border-radius:50%;background:var(--panel2);border:2px solid var(--accent);box-shadow:0 0 0 3px var(--bg),var(--glow);}
+.tl-event-card{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius-sm);padding:11px 14px;transition:border-color .15s;}
+.tl-event-card:hover{border-color:var(--accent);}
+.tl-item .when{color:var(--accent2);font-size:11px;font-weight:600;margin-bottom:3px;font-family:Menlo,Consolas,monospace;}
+.tl-item h4{font-size:13.5px;font-weight:600;}
+.tl-item .desc{font-size:12.5px;color:var(--muted);margin-top:4px;line-height:1.55;}
+
+/* ── Risk Cards ── */
+.risk{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;}
+.risk-card{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:15px;border-left:4px solid var(--muted);transition:all .2s;}
+.risk-card:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,0.2);}
+.risk-card.r{border-left-color:var(--red);background:rgba(239,68,68,0.04);}
+.risk-card.y{border-left-color:var(--yellow);background:rgba(234,179,8,0.04);}
+.risk-card.g{border-left-color:var(--green);background:rgba(16,185,129,0.04);}
+.risk-card.b{border-left-color:var(--purple);background:rgba(167,139,250,0.06);}
+.risk-card h4{font-size:13.5px;margin-bottom:7px;font-weight:700;}
+.risk-card p{font-size:12.5px;color:var(--muted);line-height:1.6;}
+.risk-card .src{font-size:10.5px;color:var(--muted);opacity:.65;margin-top:8px;display:block;}
+
+/* ── Data Tables ── */
+.dtable{width:100%;border-collapse:collapse;font-size:12px;margin-top:4px;overflow-x:auto;display:block;}
+.dtable th,.dtable td{border-bottom:1px solid var(--border);padding:8px 10px;text-align:center;white-space:nowrap;}
+.dtable thead th{background:linear-gradient(135deg,var(--panel2),var(--panel));color:var(--accent2);font-weight:700;font-size:11.5px;letter-spacing:.3px;border-top:1px solid var(--border);}
+.dtable tbody tr:nth-child(even) td{background:rgba(59,130,246,0.04);}
+.dtable tbody tr:hover td{background:rgba(59,130,246,0.10);}
+.dtable td.f{text-align:left;color:var(--text);background:var(--panel);font-weight:600;position:sticky;left:0;border-right:1px solid var(--border);}
+.dtable .hl{color:var(--warm);font-weight:700;}
+.dtable .choke{color:var(--purple);font-weight:700;}
+
+/* ── Score Matrix ── */
+.smatrix{width:100%;border-collapse:collapse;font-size:12.5px;}
+.smatrix th,.smatrix td{border-bottom:1px solid var(--border);padding:9px 11px;text-align:left;}
+.smatrix thead th{background:linear-gradient(135deg,var(--panel2),var(--panel));color:var(--accent2);font-weight:700;cursor:pointer;user-select:none;font-size:11.5px;}
+.smatrix thead th:hover{color:var(--warm);}
+.smatrix tbody tr:hover td{background:rgba(59,130,246,0.06);}
+.sbar{display:inline-block;height:7px;border-radius:4px;background:var(--accent);vertical-align:middle;}
+.sbar.c{background:var(--accent2);}.sbar.b{background:var(--warm);}
+.smatrix .tot{font-weight:800;color:var(--warm);font-size:13.5px;}
+
+/* ── View Toggle & Sort ── */
+.viewtoggle{display:flex;gap:6px;margin-bottom:14px;}
+.viewtoggle .vbtn{padding:5px 16px;border:1px solid var(--border);border-radius:20px;cursor:pointer;font-size:12px;color:var(--muted);background:var(--panel);transition:all .18s;}
+.viewtoggle .vbtn.on{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700;}
+.sortsel{background:var(--panel);border:1px solid var(--border);color:var(--text);padding:6px 11px;border-radius:8px;font-size:12px;outline:none;}
+.refresh-btn{background:rgba(34,211,238,0.10);border:1px solid rgba(34,211,238,0.35);color:var(--cyan);padding:6px 14px;border-radius:8px;cursor:pointer;font-size:12px;font-weight:600;transition:all .2s;}
+.refresh-btn:hover:not(:disabled){background:rgba(34,211,238,0.18);box-shadow:var(--glow2);}
+.refresh-btn:disabled{opacity:.6;cursor:wait;}
+.quote-status{font-family:Menlo,Consolas,monospace;}
+
+/* ── Serenity (卡口下钻) ── */
+.choke-hero{background:linear-gradient(135deg,rgba(167,139,250,0.10),var(--panel));border:1px solid rgba(167,139,250,0.30);border-radius:var(--radius);padding:22px;margin-bottom:20px;}
+.choke-hero h2{font-size:17px;color:var(--purple);font-weight:700;margin-bottom:8px;letter-spacing:.3px;}
+.choke-hero .lead{font-size:13px;color:var(--muted);line-height:1.7;}
+.choke-hero .lead em{color:var(--purple);font-style:normal;font-weight:700;}
+
+.tree{font-family:'JetBrains Mono',Menlo,Consolas,monospace;font-size:12px;color:var(--text);background:var(--panel2);border:1px solid var(--border);border-radius:var(--radius);padding:18px;white-space:pre;overflow-x:auto;line-height:1.65;}
+.tree mark{background:rgba(167,139,250,0.18);color:var(--purple);padding:0 4px;border-radius:3px;}
+
+.qa-table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:6px;}
+.qa-table th,.qa-table td{border-bottom:1px solid var(--border);padding:9px 11px;text-align:left;vertical-align:top;}
+.qa-table thead th{background:var(--panel2);color:var(--accent2);font-weight:700;font-size:11.5px;}
+.qa-table .y{color:#34d399;font-weight:700;}
+.qa-table .n{color:var(--muted);}
+.qa-table .choke-hit{background:rgba(167,139,250,0.10);font-weight:700;color:var(--purple);}
+
+.deep-card{background:linear-gradient(135deg,rgba(167,139,250,0.06),var(--panel));border:1px solid rgba(167,139,250,0.30);border-radius:var(--radius);padding:18px;margin-bottom:14px;}
+.deep-card h4{font-size:15.5px;color:var(--purple);font-weight:800;margin-bottom:10px;}
+.deep-card .reason{margin:10px 0;font-size:12.5px;color:var(--muted);line-height:1.7;}
+.deep-card .reason b{color:var(--text);}
+.deep-card .targets{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+.deep-card .targets .pill{background:rgba(167,139,250,0.10);border:1px solid rgba(167,139,250,0.32);color:var(--purple);padding:4px 11px;border-radius:14px;font-size:12px;font-weight:600;}
+.deep-card .targets .pill.cn{background:rgba(59,130,246,0.10);border-color:rgba(59,130,246,0.4);color:var(--accent2);}
+
+.demur{background:rgba(167,139,250,0.05);border:1px dashed rgba(167,139,250,0.4);border-radius:var(--radius-sm);padding:12px 14px;font-size:12px;color:var(--muted);line-height:1.7;margin-top:14px;}
+.demur b{color:var(--purple);}
+
+footer{text-align:center;color:var(--muted);font-size:11px;margin-top:40px;padding-top:20px;border-top:1px solid var(--border);}
+@media(max-width:720px){.cards{grid-template-columns:1fr;}.search{width:100%;}}
+</style>
+</head>
+<body data-theme="dark">
+<div class="wrap">
+<header>
+<div>
+<h1>{{TOPIC}}产业链投研看板<span class="sub">{{SUB_TITLE}}</span></h1>
+</div>
+<div class="toolbar">
+<span style="color:var(--muted);font-size:12px;">数据截止 {{SNAPSHOT_DATE}}</span>
+<button class="btn" id="themeBtn">☾ 暗 / 亮</button>
+</div>
+</header>
+<nav class="tabs">
+<div class="tab active" data-tab="overview">概览</div>
+<div class="tab" data-tab="chain">产业链</div>
+<div class="tab" data-tab="companies">公司速查</div>
+<div class="tab" data-tab="timeline">时间轴</div>
+<div class="tab" data-tab="risk">风险与逻辑</div>
+<div class="tab serenity" data-tab="serenity">🎯 卡口下钻</div>
+</nav>
+<div id="root"></div>
+<footer>
+基于 Kimi CLI 提炼的 {{N_SYNTHESIS}} 份合成报告 · {{N_COMPANIES}} 家行情来自腾讯财经 · 弹性测算与情景为派生量级估算（置信度中），bear case 与 serenity 卡口含分析师补充观点 · 单文件零依赖 · 数据截止 {{SNAPSHOT_DATE}}
+</footer>
+</div>
+<script>
+/* ========================================================
+ * 数据数组（生成时按 references/data-schema.md 填充）
+ * ========================================================
+ * 必填 5 数组: OVERVIEW / CHAIN / COMPANIES / TIMELINE / RISKS
+ * 扩展 B-E: SCORES / GENERATIONS / ELASTICITY / SCENARIOS
+ * 扩展 H (serenity 卡口下钻): SERENITY_TREE / DEEP_CHOKES / CHOKE_PURGE / CONFIDENCE / SERENITY_DEMUR
+ *
+ * 不启用扩展时，相应的 Tab 在 nav 里删掉、PANELS 字典里也删掉。
+ * ======================================================== */
+const SNAPSHOT_DATE = '{{SNAPSHOT_DATE}}';
+
+/* TODO: 按 references/data-schema.md 填充以下数组 */
+const OVERVIEW = { tagline:'', badges:[], inflections:[], logics:[] };
+const CHAIN = [];
+const COMPANIES = [];
+const TIMELINE = [];
+const RISKS = [];
+
+/* 可选扩展（不用就整段删除）*/
+const SCORES = [];                        // 扩展 B：三维评分矩阵
+const GENERATIONS = { cols:[], rows:[], note:'' };  // 扩展 E：多代际对比
+const ELASTICITY = [];                    // 扩展 C：环节弹性测算
+const SCENARIOS = { rows:[], note:'' };   // 扩展 D：bear/base/bull 三情景
+
+/* serenity 扩展 H（不启用时把以下 6 个变量 + renderSerenity 函数 + nav 里 serenity Tab + PANELS 里 serenity 全删）*/
+const SERENITY_TREE = ``;                 // ASCII 树根图，关键节点用 <mark>...</mark> 紫色高亮
+const DEEP_CHOKES = [];                   // 严格 2-3 个最深卡口
+const CHOKE_PURGE = [];                   // 多维排雷，3-5 家
+const CONFIDENCE = { high:'', medium:'' };
+const SERENITY_DEMUR = '';
+
+/* {{TOPIC}} 看板渲染逻辑 — 6 Tab（含 serenity 卡口下钻） */
+const SEG_NAMES = {
+  /* TODO: 按主题填环节 key -> 中文名映射，必须与 CHAIN.nodes.key、COMPANIES[].seg 对齐
+     示例（SST）：
+     'integration':'系统集成 SST 整机',
+     'power_device':'功率器件 SiC/IGBT/GaN',
+     'magnetic':'磁性材料',
+     'control_ic':'控制 IC',
+     'overseas':'海外巨头', */
+};
+const TIER_NAMES = {1:'第一梯队',2:'第二梯队',3:'第三梯队'};
+const MKT_NAMES = {SH:'SH',SZ:'SZ',HK:'HK',US:'US',TW:'TW',DE:'DE',FR:'FR',CH:'CH',UNLISTED:'未上市',OVERSEAS:'海外'};
+
+function priceLine(c){
+  if(c.price==null) return `<div class="cc-quote"><span style="color:var(--muted)">${c.note||'行情数据另查'}</span></div>`;
+  const upCls = c.change>=0?'up':'down';
+  const sign = c.change>=0?'+':'';
+  let fmtCap = '—';
+  if(c.marketCap!=null){
+    fmtCap = c.marketCap>=10000?(c.marketCap/10000).toFixed(2)+'万亿'
+           : c.marketCap>=1000?(c.marketCap/1000).toFixed(2)+'千亿'
+           : (c.marketCap.toFixed(0)+'亿');
+  }
+  const fmtChg = (v)=>v==null?'—':`<span class="${v>=0?'up':'down'}">${v>=0?'+':''}${v.toFixed(1)}%</span>`;
+  const dynPeStr = (c.dynPe==null)?'—':(c.dynPe<0?'<span style="color:#f87171">负(亏损)</span>':c.dynPe.toFixed(1));
+  // ROE：腾讯接口不返回，预留占位；外部数据接入后批量补 c.roe
+  const roeStr = (c.roe==null)?'<span style="color:var(--muted)">—</span>'
+                              :(c.roe<0?`<span style="color:#f87171">${c.roe.toFixed(1)}%</span>`
+                                       :(c.roe>=15?`<span style="color:#34d399">${c.roe.toFixed(1)}%</span>`
+                                                  :`${c.roe.toFixed(1)}%`));
+  const pegColor = c.peg==null?'var(--muted)':c.peg>3?'#f87171':c.peg<1?'#34d399':'var(--accent2)';
+  const pegStr = c.peg==null?'N/A':c.peg.toFixed(2);
+  const growthStr = c.pegGrowth==null?'—':c.pegGrowth.toFixed(1)+'%';
+  let posLine = '';
+  if(c.pos52w!=null){
+    const pct = c.pct52w!=null?c.pct52w:50;
+    posLine = `<div class="cc-pos">
+      <span>距52周高 <b style="color:${c.pos52w>-8?'#f87171':(c.pos52w<-30?'#34d399':'var(--text)')}">${c.pos52w.toFixed(1)}%</b></span>
+      <span>52周分位 <span class="bar"><i style="left:${pct}%"></i></span> ${pct}%</span>
+    </div>`;
+  }
+  return `<div class="cc-quote">
+    <span>价 <b>${c.price.toFixed(2)}</b></span>
+    <span>日 <b class="${upCls}">${sign}${c.change.toFixed(2)}%</b></span>
+    <span>5日 ${fmtChg(c.chg5d)}</span>
+    <span>20日 ${fmtChg(c.chg20d)}</span>
+    <span>动态PE <b>${dynPeStr}</b></span>
+    <span title="净资产收益率（加权平均 ROE）">ROE <b>${roeStr}</b></span>
+    <span title="预期净利润增速 ${growthStr}">PEG <b style="color:${pegColor}">${pegStr}</b></span>
+    <span>市值 <b>${fmtCap}</b></span>
+  </div>${posLine}`;
+}
+function star(n){return '★'.repeat(n)+'☆'.repeat(5-n);}
+function valTagHtml(c){
+  if(c.price==null || !c.valTag) return '';
+  return `<span class="vtag ${c.valTag}">${c.valLbl}</span>`;
+}
+
+/* ── Render: Overview ── */
+function renderOverview(){
+  const o = OVERVIEW;
+  return `
+    <div class="hero">
+      <h2>一句话定位</h2>
+      <div class="lead">${o.tagline}</div>
+      <div class="badges">
+        ${o.badges.map(b=>`<div class="badge"><div class="num">${b.num}</div><div class="lbl">${b.lbl}</div></div>`).join('')}
+      </div>
+    </div>
+    <div class="section-title">SST 产业演进路线（四阶段）</div>
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr));">
+      ${o.inflections.map(i=>`<div class="card"><h4 style="color:var(--warm);font-size:13px;">${i.y} · ${i.t}</h4><p style="margin-top:6px;color:var(--muted);font-size:13px;">${i.d}</p></div>`).join('')}
+    </div>
+    <div class="section-title">三大核心投资逻辑</div>
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));">
+      ${o.logics.map((l,i)=>`<div class="card"><h4 style="color:var(--accent2);">${i+1}. ${l.t}</h4><p style="margin-top:6px;color:var(--muted);font-size:13px;">${l.d}</p>${(l.tags||[]).length?`<div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:4px;">${l.tags.map(t=>`<span class="tag cust">${t}</span>`).join('')}</div>`:''}</div>`).join('')}
+    </div>
+    <div class="section-title">SST 整机 BOM 结构（IGBT 原型机口径）</div>
+    <div class="card" style="font-size:13px;color:var(--muted);">
+      功率器件 <b style="color:var(--warm)">32-40%</b> · 高频变压器 <b style="color:var(--warm)">12-18%</b> · DC-Link 电容 <b style="color:var(--warm)">14-16%</b> · 散热/液冷 <b style="color:var(--warm)">8-10%</b> · 控制 IC/驱动 <b style="color:var(--warm)">5-8%</b> · 磁性材料/磁芯 <b style="color:var(--warm)">5-8%</b> · 系统集成/组装 <b style="color:var(--warm)">20-30%</b>
+      <br><span style="font-size:12px;">注：海外口径单 MW BOM 约 90-140 万元，国内目标 40-80 万元；功率器件降本空间最大（65-70%），来自 SiC 8 英寸→12 英寸 + 国产替代叠加。卡脖子环节：控制 IC/驱动（国产化率 &lt;5%），SiC 衬底（依赖海外 80%+）。</span>
+    </div>
+    <div class="section-title">环节弹性测算（单 MW 价值量 × 龙头份额 × 市场空间）</div>
+    <div class="card" style="padding:8px;">
+      <table class="dtable">
+        <thead><tr><th class="f">环节</th><th>占整机 BOM</th><th>单 MW 价值量</th><th>龙头</th><th>份额</th><th>2026 空间</th><th>2027 空间</th><th>降本传导</th></tr></thead>
+        <tbody>
+          ${ELASTICITY.map(e=>`<tr><td class="f">${e.node}</td><td>${e.bomPct}</td><td class="hl">${e.perRack}</td><td>${e.leader}</td><td>${e.share}</td><td>${e.m26}</td><td class="hl">${e.m27}</td><td style="color:var(--muted);font-size:11px;">${e.note}</td></tr>`).join('')}
+        </tbody>
+      </table>
+      <div class="elas-note">单 MW 价值量 = BOM 占比 × 整机均价（约 80-120 万元/MW）；市场空间取自 04 行业白皮书。<b>为量级测算，非精确盈利预测，置信度中</b>。锚点：2027 全球 SST 市场约 115 亿元（爱建 2025-11-26）；2030 超 1000 亿元（东吴 2025-11-29）。</div>
+    </div>
+    <div class="section-title">情景敏感性（渗透率驱动 · bear / base / bull）</div>
+    <div class="card" style="padding:8px;">
+      <table class="scen">
+        <thead><tr><th style="width:18%;">维度</th><th class="bear" style="width:27%;">🐻 Bear 悲观</th><th class="base" style="width:27%;">⚖️ Base 中性</th><th class="bull" style="width:28%;">🚀 Bull 乐观</th></tr></thead>
+        <tbody>
+          ${SCENARIOS.rows.map(r=>`<tr><td style="color:var(--muted);font-weight:600;">${r.f}</td><td class="bear">${r.bear}</td><td class="base">${r.base}</td><td class="bull">${r.bull}</td></tr>`).join('')}
+        </tbody>
+      </table>
+      <div class="elas-note">${SCENARIOS.note}</div>
+    </div>
+  `;
+}
+
+/* ── Render: Chain ── */
+function renderChain(){
+  return `
+    <div class="section-title">SST 多代际演进对比（工频 UPS → IGBT → SiC → GaN）</div>
+    <div class="card" style="padding:8px;">
+      <table class="dtable">
+        <thead><tr><th class="f">指标</th>${GENERATIONS.cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead>
+        <tbody>
+          ${GENERATIONS.rows.map(r=>`<tr><td class="f">${r.field}</td>${r.vals.map((v,i)=>`<td class="${i===1?'hl':''}">${v}</td>`).join('')}</tr>`).join('')}
+        </tbody>
+      </table>
+      <div class="gen-note">${GENERATIONS.note}（高亮列 = 当前主角 IGBT-SST 拐点期）</div>
+    </div>
+    <div class="section-title">产业链分层（点节点跳转对应公司）</div>
+    <div class="chain">
+      ${CHAIN.map((row,i)=>`
+        <div class="chain-row">
+          <h3>${row.layer}<span class="pct">${row.pct}</span></h3>
+          <div class="nodes">
+            ${row.nodes.map(n=>`<div class="node" data-seg="${n.key}"><h4>${n.t}</h4><div class="desc">${n.d}</div></div>`).join('')}
+          </div>
+        </div>
+        ${i<CHAIN.length-1?'<div class="arrow">▼</div>':''}
+      `).join('')}
+    </div>
+    <div class="section-title">国产化率 / 卡脖子全景</div>
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr));">
+      <div class="card"><h4 style="color:var(--red);font-size:13px;">⚠ 国产化率 &lt;10%（卡脖子）</h4><p style="margin-top:6px;color:var(--muted);font-size:12.5px;">控制 IC/驱动 IC（TI/ADI/英飞凌 95%+）、SiC 衬底（海外 80%+，天岳追赶中）、SiC 外延 CVD 反应炉（Aixtron/LPE）、800V 长寿命薄膜电容（高端介质依赖海外）</p></div>
+      <div class="card"><h4 style="color:var(--yellow);font-size:13px;">国产化率 30-70%（追赶中·主战场）</h4><p style="margin-top:6px;color:var(--muted);font-size:12.5px;">SiC 模块（士兰/三安/宏微）、SST 整机（金盘/四方/中国西电）、800V HVDC 电源（麦格米特/盛弘/中恒电气）、电容（江海/法拉）、液冷（英维克/申菱）</p></div>
+      <div class="card"><h4 style="color:var(--green);font-size:13px;">✓ 国产已主导（确定性最高）</h4><p style="margin-top:6px;color:var(--muted);font-size:12.5px;">纳米晶/非晶磁芯（云路 60%+）、高频变压器（金盘/新特/可立克 70%+）、AIDC 电感（顺络）、控保设备（四方）、配电变压器整机（金盘/特变）</p></div>
+    </div>
+  `;
+}
+
+/* ── Render: Companies ── */
+let CUR_SEG='all', CUR_TIER='all', CUR_KW='', CUR_VIEW='cards', CUR_SORT='default', SCORE_SORT='total';
+
+function sortCompanies(arr){
+  const a=[...arr];
+  const num=(v)=>v==null?-Infinity:v;
+  switch(CUR_SORT){
+    case 'chg20d': a.sort((x,y)=>num(y.chg20d)-num(x.chg20d)); break;
+    case 'pe': a.sort((x,y)=>{
+      const px=(x.dynPe==null||x.dynPe<0)?Infinity:x.dynPe;
+      const py=(y.dynPe==null||y.dynPe<0)?Infinity:y.dynPe;
+      return px-py;
+    }); break;
+    case 'mcap': a.sort((x,y)=>num(y.marketCap)-num(x.marketCap)); break;
+    case 'pos': a.sort((x,y)=>num(x.pos52w)-num(y.pos52w)); break;
+    case 'roe': a.sort((x,y)=>{
+      // ROE 高→低；null 沉底
+      const rx = x.roe==null ? -Infinity : x.roe;
+      const ry = y.roe==null ? -Infinity : y.roe;
+      return ry - rx;
+    }); break;
+    case 'rating': a.sort((x,y)=>y.rating-x.rating||x.tier-y.tier); break;
+    default: break;
+  }
+  return a;
+}
+function renderCompanies(){
+  const segs = ['all','integration','power_device','magnetic','transformer','control_ic','application','overseas'];
+  const tiers = ['all',1,2,3];
+  let filtered = COMPANIES.filter(c=>{
+    if(CUR_SEG!=='all' && c.seg!==CUR_SEG) return false;
+    if(CUR_TIER!=='all' && c.tier!==CUR_TIER) return false;
+    if(CUR_KW){
+      const kw = CUR_KW.toLowerCase();
+      const hay = (c.name+c.code+c.highlights+(c.tags||[]).join('')+(c.customers||[]).join('')).toLowerCase();
+      if(!hay.includes(kw)) return false;
+    }
+    return true;
+  });
+  filtered = sortCompanies(filtered);
+  const viewBar = `
+    <div class="viewtoggle">
+      <div class="vbtn ${CUR_VIEW==='cards'?'on':''}" data-view="cards">📇 公司卡片</div>
+      <div class="vbtn ${CUR_VIEW==='matrix'?'on':''}" data-view="matrix">📊 三维评分矩阵</div>
+    </div>`;
+  if(CUR_VIEW==='matrix') return viewBar + renderMatrix();
+  const sortBar = `
+    <select class="sortsel" id="sortSel">
+      <option value="default" ${CUR_SORT==='default'?'selected':''}>默认（环节/梯队）</option>
+      <option value="rating" ${CUR_SORT==='rating'?'selected':''}>按综合星级</option>
+      <option value="chg20d" ${CUR_SORT==='chg20d'?'selected':''}>按 20 日涨幅</option>
+      <option value="pe" ${CUR_SORT==='pe'?'selected':''}>按动态 PE（低→高）</option>
+      <option value="roe" ${CUR_SORT==='roe'?'selected':''}>按 ROE（高→低）</option>
+      <option value="pos" ${CUR_SORT==='pos'?'selected':''}>按距 52 周高（回调深→浅）</option>
+      <option value="mcap" ${CUR_SORT==='mcap'?'selected':''}>按市值</option>
+    </select>
+    <button class="btn refresh-btn" id="refreshQuotesBtn" title="一键拉取腾讯财经最新行情（A股/港股/美股）">🔄 刷新行情</button>`;
+  return viewBar + `
+    <div class="filters">
+      <span style="color:var(--muted);font-size:12px;">环节：</span>
+      ${segs.map(s=>`<div class="chip ${CUR_SEG===s?'on':''}" data-filter-seg="${s}">${s==='all'?'全部':SEG_NAMES[s]||s}</div>`).join('')}
+    </div>
+    <div class="filters">
+      <span style="color:var(--muted);font-size:12px;">梯队：</span>
+      ${tiers.map(t=>`<div class="chip ${CUR_TIER===t?'on':''}" data-filter-tier="${t}">${t==='all'?'全部':TIER_NAMES[t]}</div>`).join('')}
+      <input class="search" id="kwSearch" placeholder="搜索公司/代码/客户/技术..." value="${CUR_KW}">
+      ${sortBar}
+      <span class="quote-status" id="quoteStatus" style="color:var(--muted);font-size:11.5px;margin-left:auto;">数据截止 ${SNAPSHOT_DATE}</span>
+      <span style="color:var(--muted);font-size:12px;">共 ${filtered.length} / ${COMPANIES.length} 家</span>
+    </div>
+    <div class="cards">
+      ${filtered.map(c=>{
+        const isUnlisted = c.price==null;
+        const tags = c.tags||[];
+        return `
+        <div class="cc tier-card-${c.tier} ${isUnlisted?'unlisted':''}" data-code="${c.code}">
+          <div class="cc-inner">
+            <div class="cc-head">
+              <div>
+                <div class="cc-name">${c.name}${valTagHtml(c)}</div>
+                <div class="cc-code">${c.code}.${MKT_NAMES[c.mkt]||c.mkt}</div>
+              </div>
+              <div style="text-align:right;">
+                <span class="tier tier-${c.tier}">${TIER_NAMES[c.tier]}</span>
+                <div class="cc-stars">${star(c.rating)}</div>
+              </div>
+            </div>
+            <div class="cc-segment">${SEG_NAMES[c.seg]||c.seg}</div>
+            ${priceLine(c)}
+            <div class="cc-hl">${c.highlights}</div>
+            <div class="tags">
+              ${(c.customers||[]).map(t=>`<span class="tag cust">${t}</span>`).join('')}
+              ${tags.map(t=>{
+                const cls = (t.indexOf('🎯')>=0)?'tag choke':'tag';
+                return `<span class="${cls}">${t}</span>`;
+              }).join('')}
+            </div>
+            <div class="cc-detail">
+              <b style="color:var(--text);">关键里程碑：</b>
+              <ul>${(c.milestones||[]).map(m=>`<li>${m}</li>`).join('')}</ul>
+            </div>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>
+  `;
+}
+function renderMatrix(){
+  const rows=[...SCORES].sort((a,b)=>{
+    if(SCORE_SORT==='v') return b.v-a.v;
+    if(SCORE_SORT==='c') return b.c-a.c;
+    if(SCORE_SORT==='b') return b.b-a.b;
+    return b.total-a.total;
+  });
+  const bar=(val,cls)=>val==null?'—':`<span class="sbar ${cls}" style="width:${val/5*46}px"></span> ${val.toFixed(1)}`;
+  return `
+    <p style="color:var(--muted);font-size:12.5px;margin-bottom:10px;">三维评分（5 分制，来自 03_标的画像）：<b style="color:var(--accent)">价值量弹性</b> · <b style="color:var(--accent2)">客户确定性</b> · <b style="color:var(--warm)">国产化壁垒</b>。点表头切换排序。</p>
+    <div class="card" style="padding:6px 12px;">
+    <table class="smatrix">
+      <thead><tr>
+        <th>公司 / 环节</th>
+        <th data-score="v">价值量弹性 ▾</th>
+        <th data-score="c">客户确定性 ▾</th>
+        <th data-score="b">国产化壁垒 ▾</th>
+        <th data-score="total">综合 ▾</th>
+        <th>评语</th>
+      </tr></thead>
+      <tbody>
+        ${rows.map(r=>`<tr>
+          <td><b>${r.name}</b><br><span style="color:var(--muted);font-size:11px;">${r.code} · ${SEG_NAMES[r.seg]||r.seg}</span></td>
+          <td>${bar(r.v,'')}</td>
+          <td>${bar(r.c,'c')}</td>
+          <td>${bar(r.b,'b')}</td>
+          <td class="tot">${r.total.toFixed(1)}</td>
+          <td style="color:var(--muted);font-size:11.5px;max-width:240px;white-space:normal;">${r.note||''}</td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+    </div>`;
+}
+
+/* ── Render: Timeline ── */
+function renderTimeline(){
+  return `<div class="tl">${TIMELINE.map(t=>`
+    <div class="tl-item">
+      <div class="tl-event-card">
+        <div class="when">${t.when}</div>
+        <h4>${t.t}</h4>
+        <div class="desc">${t.d}</div>
+      </div>
+    </div>
+  `).join('')}</div>`;
+}
+
+/* ── Render: Risk ── */
+function renderRisk(){
+  return `
+    <p style="color:var(--muted);font-size:12.5px;margin-bottom:12px;">🔴 高风险 / 🟡 中风险 / 🟢 正面催化 来自研报；<b style="color:var(--purple)">🔶 紫色卡片为分析师补充的 bear case，非研报观点</b>，用于平衡多空。</p>
+    <div class="risk">
+      ${RISKS.map(r=>`<div class="risk-card ${r.lvl}"><h4>${r.t}</h4><p>${r.d}</p>${r.src?`<span class="src">${r.src}</span>`:''}</div>`).join('')}
+    </div>
+    <div class="section-title">个股级风险清单（需个案排雷）</div>
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));">
+      <div class="card"><h4 style="color:#f87171;font-size:13px;">估值透支（PE 高 + 近高位）</h4><p style="margin-top:6px;color:var(--muted);font-size:12.5px;">麦格米特、士兰微、英维克、新特电气等 PE&gt;100 且距 52 周高较近，已较多计价 2026-27 预期，业绩 miss 或催化延迟回调弹性大。</p></div>
+      <div class="card"><h4 style="color:var(--warm);font-size:13px;">客户单一依赖</h4><p style="margin-top:6px;color:var(--muted);font-size:12.5px;">麦格米特绑定英伟达、中恒电气绑定阿里腾讯字节、英维克绑定谷歌/英伟达——大客户砍单或份额调整反向波动也大。</p></div>
+      <div class="card"><h4 style="color:var(--muted);font-size:13px;">概念映射 &gt; 实质供货</h4><p style="margin-top:6px;color:var(--muted);font-size:12.5px;">第三梯队多家仅"布局/送样/在研"，尚无 SST 实质订单；上涨主要靠主题映射，需警惕证伪后回撤。</p></div>
+    </div>
+    <div class="section-title">海外垄断 vs 国产突破</div>
+    <div class="grid" style="grid-template-columns:1fr 1fr;gap:14px;">
+      <div class="card"><h4 style="color:var(--accent2);">🌐 海外 · 核心环节垄断</h4><p style="margin-top:8px;color:var(--muted);font-size:13px;">SiC 衬底(Wolfspeed/STM)+SiC 模块(英飞凌/STM/Onsemi)+控制 IC(TI/ADI 95%+)+SST 整机(Eaton/Vertiv/台达 60%+)+800V GaN(Navitas)——单 MW BOM 的 50%+ 价值仍由海外锁定。</p></div>
+      <div class="card"><h4 style="color:var(--accent2);">🇨🇳 国产 · 从"替补"到"首发"</h4><p style="margin-top:8px;color:var(--muted);font-size:13px;">天岳(SiC 衬底全球 22.8%)、云路(纳米晶 60%+)、金盘(SST 整机龙一)、士兰(SiC 模块批量)、麦格米特(英伟达短名单)、英维克(液冷 Tier1)。功率器件·磁芯·整机·液冷 是 A 股业绩弹性主战场。</p></div>
+    </div>
+    <div class="section-title">投资策略建议（综合 Kimi 提炼共识 + serenity 卡口视角）</div>
+    <div class="card" style="font-size:13px;line-height:1.8;color:var(--text);">
+      <b>仓位优先级：</b>第一梯队重仓"已进 AIDC 体系+有量产订单"的核心（金盘 / 天岳 / 云路 / 士兰 / 英维克 / 麦格米特 / 中恒电气 / 顺络）作底仓；第二梯队布局认证突破期弹性（科士达 / 盛弘 / 新特 / 可立克 / 江海 / 申菱 / 安泰 / 东睦）；小仓位配储备卡位（华润微/隔离驱动 IC、特锐德/110kV SST 规划、特变电工）。<br><br>
+      <b>实操节奏：</b>2026Q3-Q4 跟踪金盘海外 AIDC 订单兑现 + 天岳 8 英寸放量节奏；2027 GTC 关注英伟达 Rubin Ultra SST 配套切换；2027H2 国内首批 SST 装机后业绩兑现期。逢板块回调低吸"有认证+有订单+有产能"标的，回避纯映射无实质供货的概念股。<br><br>
+      <b>选股标准：</b>SST/AIDC 营收占比与认证进度可验证；样机/送样/订单节奏明确；国产替代卡位深、客户绑定清晰；警惕 PE 透支 2027 业绩、客户单一依赖、隔离 IC 国产化突破不及预期。<br><br>
+      <span style="color:var(--muted);font-size:12px;">⚠ 本看板基于 Kimi CLI 从 85 篇研报提炼的 5 份合成报告整理，不构成任何投资建议。数据时点 ${SNAPSHOT_DATE}。</span>
+    </div>
+  `;
+}
+
+/* ── Render: Serenity 卡口下钻（第 6 个 Tab）── */
+function renderSerenity(){
+  return `
+    <div class="choke-hero">
+      <h2>🎯 SST 产业链 serenity 卡口下钻</h2>
+      <div class="lead">
+        本 Tab 应用 <em>serenity 卡口投研六步下钻法</em>（"把龙头当入口、溯游而上、撞到河道最窄处"），与"概览/产业链"的<em>全链路雨露均沾</em>视角形成对照。
+        SST/AIDC 满足 serenity"超级周期门槛"——AI 算力需求驱动、5-10 年长周期、2025-2026 拐点。
+        在产业链 4 层下钻中锁定 <em>3 个最深卡口</em>：<b style="color:var(--purple)">SiC 8/12 英寸衬底 · 纳米晶薄带及母合金 · 隔离驱动/数字隔离 IC</b>。
+      </div>
+    </div>
+    <div class="section-title serenity">需求传导链：从 AI 算力到河道最窄处</div>
+    <div class="tree">AI 算力需求（英伟达 / 云厂商 / 互联网厂）
+        |
+        v
+AIDC 机柜功率密度提升（40kW -&gt; 120kW+）
+        |
+        v
+800V HVDC / SST 供电架构成为终局方案
+        |
+        v
+SST 整机（金盘 / Eaton / Vertiv / 台达 / 中国西电）
+        |
+        +---&gt; 功率器件层：SiC MOSFET / IGBT / GaN
+        |           |
+        |           v
+        |       SiC 芯片 -&gt; 外延 -&gt; <mark>SiC 衬底</mark> -&gt; 长晶/切割/抛光设备
+        |
+        +---&gt; 磁性层：高频变压器 -&gt; 纳米晶/非晶磁芯 -&gt; <mark>纳米晶薄带</mark> -&gt; 母合金
+        |
+        +---&gt; 电容层：DC-Link 薄膜电容 -&gt; 高端介质/薄膜材料
+        |
+        +---&gt; 控制层：MCU/DSP/<mark>隔离驱动</mark> -&gt; 数字隔离器 -&gt; 晶圆代工
+        |
+        +---&gt; 散热层：液冷 -&gt; 冷板/冷却液 -&gt; 微通道加工设备</div>
+
+    <div class="section-title serenity">每层四个物理追问表（寡头? / 扩产? / 替代? / 必须用?）</div>
+
+    <h4 style="font-size:13px;color:var(--purple);margin:18px 0 8px;">4.1 整机层（SST）</h4>
+    <table class="qa-table"><thead><tr><th style="width:24%;">节点</th><th>寡头?</th><th>扩产多久?</th><th>有无替代?</th><th>下游必须用?</th><th>是否卡口</th></tr></thead><tbody>
+      <tr><td><b>SST 整机</b></td><td class="y">海外 Eaton/Vertiv/台达 60%+；国内金盘/四方追赶</td><td>样机到量产 1-2 年</td><td class="n">HVDC/巴拿马电源可替代</td><td class="y">终局方案必须用</td><td class="n">否（替代多）</td></tr>
+      <tr><td><b>中压工程集成</b></td><td>金盘/四方/中国西电/阳光</td><td>1-2 年</td><td>海外整机可替代</td><td class="y">必须用</td><td class="n">否</td></tr>
+    </tbody></table>
+
+    <h4 style="font-size:13px;color:var(--purple);margin:18px 0 8px;">4.2 部件层</h4>
+    <table class="qa-table"><thead><tr><th style="width:24%;">节点</th><th>寡头?</th><th>扩产多久?</th><th>有无替代?</th><th>下游必须用?</th><th>是否卡口</th></tr></thead><tbody>
+      <tr><td><b>SiC MOSFET 模块</b></td><td class="y">英飞凌/STM/Onsemi 主导</td><td>模块封装 1-2 年</td><td>IGBT 过渡替代</td><td class="y">高压高频必须用</td><td>弱卡口</td></tr>
+      <tr><td><b>高频变压器</b></td><td>新特/金盘/可立克/ABB/台达</td><td>6-12 个月</td><td>工频变压器可替代但体积大</td><td class="y">必须用</td><td>弱卡口</td></tr>
+      <tr><td><b>DC-Link 薄膜电容</b></td><td>EPCOS/Vishay/法拉/江海</td><td>6-12 个月</td><td>铝电解可部分替代</td><td class="y">必须用</td><td>弱卡口</td></tr>
+      <tr class="choke-hit"><td><b>高端 MCU/DSP</b></td><td class="y">TI/ADI/英飞凌/NXP &gt;90%</td><td>2-3 年</td><td>国产 MCU 部分替代</td><td class="y">必须用</td><td>卡口</td></tr>
+      <tr class="choke-hit"><td><b>隔离驱动 IC</b></td><td class="y">TI/ADI/英飞凌主导</td><td>2-3 年</td><td>国产部分料号替代</td><td class="y">必须用</td><td>卡口</td></tr>
+    </tbody></table>
+
+    <h4 style="font-size:13px;color:var(--purple);margin:18px 0 8px;">4.3 材料层</h4>
+    <table class="qa-table"><thead><tr><th style="width:24%;">节点</th><th>寡头?</th><th>扩产多久?</th><th>有无替代?</th><th>下游必须用?</th><th>是否卡口</th></tr></thead><tbody>
+      <tr class="choke-hit"><td><b>SiC 衬底 8/12 英寸</b></td><td class="y">Wolfspeed/天岳/Coherent</td><td>8寸 2-3 年；12寸 3-5 年</td><td class="y">硅基 IGBT 过渡，SiC 无可替代</td><td class="y">高压 SST 必须用</td><td>强卡口</td></tr>
+      <tr class="choke-hit"><td><b>纳米晶薄带</b></td><td class="y">云路 60%+；日立/Metglas</td><td>1-2 年</td><td>非晶/铁氧体可替代但性能差</td><td class="y">高频变压器必须用</td><td>强卡口</td></tr>
+      <tr><td><b>非晶薄带母合金</b></td><td>云路/安泰/日立金属</td><td>1-2 年</td><td>硅钢可替代但损耗大</td><td class="y">非晶/纳米晶必须用</td><td>中卡口</td></tr>
+      <tr><td><b>高压电容介质薄膜</b></td><td>日本/欧美少数厂商</td><td>1-2 年</td><td>国产薄膜加速替代</td><td class="y">必须用</td><td>弱卡口</td></tr>
+    </tbody></table>
+
+    <h4 style="font-size:13px;color:var(--purple);margin:18px 0 8px;">4.4 专用设备层（资料薄/置信度中）</h4>
+    <table class="qa-table"><thead><tr><th style="width:24%;">节点</th><th>寡头?</th><th>扩产多久?</th><th>有无替代?</th><th>下游必须用?</th><th>是否卡口</th></tr></thead><tbody>
+      <tr class="choke-hit"><td><b>SiC 外延 CVD 反应炉</b></td><td class="y">Aixtron/LPE/北方华创</td><td>1-2 年</td><td class="y">无国产高端替代</td><td class="y">外延必须用</td><td>深卡口</td></tr>
+      <tr><td><b>SiC 衬底切割/抛光设备</b></td><td>日本/欧洲设备商 + 国产追赶</td><td>1-2 年</td><td>国产低端可替代</td><td class="y">必须用</td><td>中卡口</td></tr>
+      <tr class="choke-hit"><td><b>纳米晶制带机</b></td><td class="y">云路自制为主，进口受限</td><td>1-2 年</td><td class="y">无成熟国产替代</td><td class="y">纳米晶必须用</td><td>深卡口</td></tr>
+      <tr><td><b>高频磁芯成型设备</b></td><td>日/欧设备 + 国产</td><td>6-12 个月</td><td>国产替代中</td><td class="y">必须用</td><td>弱卡口</td></tr>
+    </tbody></table>
+
+    <div class="section-title serenity">卡口中的卡口：3 个最深节点</div>
+    <div class="deep-card">
+      <h4>🎯 最深卡口一：SiC 8/12 英寸衬底</h4>
+      <div class="reason">
+        <b>· 不可替代：</b>高压、高频、高效率 SST 主功率级必须使用 SiC MOSFET，硅基 IGBT 在开关频率与损耗上无法替代<br>
+        <b>· 供给刚性：</b>8 英寸衬底从长晶、切割到抛光需 2-3 年扩产周期；12 英寸尚需 3-5 年<br>
+        <b>· 寡头垄断：</b>全球导电型 SiC 衬底由 Wolfspeed、天岳先进、Coherent 等少数厂商主导，天岳 2024 年全球市占率约 22.8%<br>
+        <b>· 没人看见：</b>市场更多关注 SiC 器件与模块，衬底作为"材料里的材料"关注度低于终端应用
+      </div>
+      <div style="font-size:12px;color:var(--muted);margin-top:8px;">需求传导：英伟达 800V DC / 云厂商 AIDC -&gt; SST 整机 -&gt; SiC MOSFET 模块 -&gt; SiC 芯片 -&gt; SiC 衬底</div>
+      <div class="targets">
+        <span class="pill cn">A 股：天岳先进 688234</span>
+        <span class="pill">海外：Wolfspeed (WOLF)</span>
+        <span class="pill">海外：Coherent (COHR)</span>
+      </div>
+    </div>
+    <div class="deep-card">
+      <h4>🎯 最深卡口二：纳米晶薄带及母合金</h4>
+      <div class="reason">
+        <b>· 不可替代：</b>纳米晶兼具高磁导率、高饱和磁密、高工作频率，是大功率 SST 高频变压器的最优磁芯材料<br>
+        <b>· 供给刚性：</b>纳米晶薄带制带工艺 know-how 深，扩产周期 1-2 年，良率与一致性提升慢<br>
+        <b>· 寡头垄断：</b>国内云路股份市场份额 60%+，海外日立金属/Metglas 占据高端<br>
+        <b>· 没人看见：</b>市场关注高频变压器整机，对上游薄带材料与母合金关注度低
+      </div>
+      <div style="font-size:12px;color:var(--muted);margin-top:8px;">需求传导：AIDC 功率密度提升 -&gt; SST 小型化 -&gt; 高频变压器 -&gt; 纳米晶磁芯 -&gt; 纳米晶薄带/母合金</div>
+      <div class="targets">
+        <span class="pill cn">A 股：云路股份 688190</span>
+        <span class="pill cn">A 股：安泰科技 000969（纳米晶平台）</span>
+        <span class="pill">海外：日立金属 / Metglas</span>
+      </div>
+    </div>
+    <div class="deep-card">
+      <h4>🎯 最深卡口三：隔离驱动 / 数字隔离 IC</h4>
+      <div class="reason">
+        <b>· 不可替代：</b>MCU/DSP 与高压功率器件之间必须隔离，数字隔离器/隔离驱动是系统安全运行的刚需<br>
+        <b>· 供给刚性：</b>车规/工规隔离 IC 从设计到认证需 2-3 年，国产高端料号稀缺<br>
+        <b>· 寡头垄断：</b>TI、ADI、英飞凌、NXP 占据 90% 以上份额，国产 MCU/DSP/隔离驱动国产化率不足 5-10%<br>
+        <b>· 没人看见：</b>市场关注功率器件与控制板整机，对隔离 IC 这一"小芯片大瓶颈"认知不足。<b style="color:var(--purple)">这是 SST 产业链最严苛符合 serenity 四问的卡口</b>
+      </div>
+      <div style="font-size:12px;color:var(--muted);margin-top:8px;">需求传导：英伟达/云厂商 AIDC -&gt; SST 整机 -&gt; 控制板 -&gt; 隔离驱动/数字隔离器</div>
+      <div class="targets">
+        <span class="pill cn">A 股：华润微 688396（部分驱动 IC）</span>
+        <span class="pill cn">A 股：士兰微 600460（IPM/隔离驱动）</span>
+        <span class="pill">海外：TI / ADI / 英飞凌</span>
+      </div>
+    </div>
+
+    <div class="section-title serenity">多维排雷：5 家卡口标的逐项过筛</div>
+    <table class="qa-table"><thead><tr><th>标的</th><th>产能</th><th>订单</th><th>认证</th><th>估值</th><th>治理</th><th>结论</th></tr></thead><tbody>
+      <tr><td><b>天岳先进</b><br><span style="color:var(--muted);font-size:11px;">688234</span></td><td>8 英寸批量；12 英寸已展出</td><td>切入英飞凌/博世/安森美</td><td>多家国际 Tier1 车规/工业</td><td>2027E PE 约 89 倍，偏高</td><td>实控人稳定，无重大减持</td><td class="y">值得跟踪</td></tr>
+      <tr><td><b>云路股份</b><br><span style="color:var(--muted);font-size:11px;">688190</span></td><td>非晶/纳米晶国内 60%+</td><td>头部电源客户已导入</td><td>SST 认证推进中</td><td>市值较小，弹性大</td><td>央企背景（中国航发）</td><td class="y">值得跟踪</td></tr>
+      <tr><td><b>士兰微</b><br><span style="color:var(--muted);font-size:11px;">600460</span></td><td>SiC 模块批量；IPM 1.7 亿颗</td><td>已进 AIDC 电源客户链</td><td>认证进展领先国内</td><td>周期+主题双重影响</td><td>民营 IDM 龙头</td><td class="y">值得跟踪</td></tr>
+      <tr><td><b>金盘科技</b><br><span style="color:var(--muted);font-size:11px;">688676</span></td><td>10kV/2.4MW 样机已完成</td><td>2025H1 数据中心 +460%</td><td>海外送样推进</td><td>2025E PE 约 36 倍</td><td>实控人稳定，警惕海外节奏</td><td class="y">值得跟踪（整机非最深卡口）</td></tr>
+      <tr><td><b>华润微</b><br><span style="color:var(--muted);font-size:11px;">688396</span></td><td>部分驱动 IC 料号产能</td><td>未披露 SST 专用订单</td><td>差距 TI/ADI 仍大</td><td>受周期贝塔影响</td><td>央企背景，治理稳健</td><td>待观察（短期弹性不足）</td></tr>
+    </tbody></table>
+
+    <div class="section-title serenity">置信度标注</div>
+    <div class="grid" style="grid-template-columns:1fr 1fr;gap:14px;">
+      <div class="card"><h4 style="color:var(--green);font-size:13px;">高置信度（研报实据）</h4><p style="margin-top:6px;color:var(--muted);font-size:12.5px;">超级周期/龙头入口/SiC 衬底/纳米晶薄带份额数据均经多源研报交叉验证（爱建/东吴/国信/国金/华金/民生/头豹）</p></div>
+      <div class="card"><h4 style="color:var(--warm);font-size:13px;">中置信度（serenity 推断）</h4><p style="margin-top:6px;color:var(--muted);font-size:12.5px;">专用设备层（CVD 反应炉/纳米晶制带机/衬底切割抛光）国内研报覆盖较薄，部分信息来自行业常识与设备商公开资料；"没人看见"维度属 serenity 主观判断</p></div>
+    </div>
+
+    <div class="demur">
+      <b>⚠ 特别说明：</b>本 Tab 是 serenity"把龙头当入口、溯游而上找卡口"方法论的产物，<b>不是研报共识</b>。卡口候选可能因技术迭代、新进入者扩产或下游方案变更而失效。本视角与"概览/产业链"Tab 形成对照——
+      04 行业白皮书选出的核心标的（金盘/麦格米特/科士达/盛弘）是<b>整机+下游</b>视角，05 卡口选出的（天岳/云路/士兰/华润微）是<b>上游+材料</b>视角，两者几乎不重合。投资决策需结合公司公告、订单披露与估值节奏独立判断，<b style="color:var(--purple)">不构成投资建议</b>。
+    </div>
+  `;
+}
+
+/* === Mount === */
+const PANELS = {
+  overview:renderOverview, chain:renderChain, companies:renderCompanies,
+  timeline:renderTimeline, risk:renderRisk, serenity:renderSerenity
+};
+let curTab = 'overview';
+function mount(){
+  document.getElementById('root').innerHTML = `<div class="panel active">${PANELS[curTab]()}</div>`;
+  bindPanelEvents();
+}
+function bindPanelEvents(){
+  document.querySelectorAll('.node').forEach(el=>{
+    el.addEventListener('click',()=>{
+      const seg = el.dataset.seg;
+      if(SEG_NAMES[seg]){
+        CUR_SEG = seg;
+        CUR_TIER = 'all';
+        switchTab('companies');
+      }
+    });
+  });
+  document.querySelectorAll('[data-filter-seg]').forEach(el=>{
+    el.addEventListener('click',()=>{
+      CUR_SEG = el.dataset.filterSeg==='all'?'all':el.dataset.filterSeg;
+      mount();
+    });
+  });
+  document.querySelectorAll('[data-filter-tier]').forEach(el=>{
+    el.addEventListener('click',()=>{
+      const v = el.dataset.filterTier;
+      CUR_TIER = v==='all'?'all':parseInt(v);
+      mount();
+    });
+  });
+  const sb = document.getElementById('kwSearch');
+  if(sb){
+    sb.addEventListener('input',(e)=>{
+      CUR_KW=e.target.value;
+      const v=e.target.selectionStart;
+      mount();
+      const s=document.getElementById('kwSearch');
+      if(s){s.focus(); s.setSelectionRange(v,v);}
+    });
+  }
+  document.querySelectorAll('.cc').forEach(el=>{
+    el.addEventListener('click',(e)=>{
+      if(e.target.tagName==='INPUT')return;
+      el.classList.toggle('open');
+    });
+  });
+  document.querySelectorAll('[data-view]').forEach(el=>{
+    el.addEventListener('click',()=>{ CUR_VIEW=el.dataset.view; mount(); });
+  });
+  const ss=document.getElementById('sortSel');
+  if(ss) ss.addEventListener('change',(e)=>{ CUR_SORT=e.target.value; mount(); });
+  const rb=document.getElementById('refreshQuotesBtn');
+  if(rb) rb.addEventListener('click',()=>refreshQuotes());
+  document.querySelectorAll('[data-score]').forEach(el=>{
+    el.addEventListener('click',()=>{ SCORE_SORT=el.dataset.score; mount(); });
+  });
+}
+
+/* ── Refresh Quotes（扩展 I）：浏览器直连腾讯财经接口拉最新行情 ── */
+/* 仅刷新 A 股 / 港股 / 美股 (price != null)；未上市标的跳过；ROE 字段不动 */
+async function refreshQuotes(){
+  const btn = document.getElementById('refreshQuotesBtn');
+  const status = document.getElementById('quoteStatus');
+  if(btn){ btn.disabled = true; btn.textContent = '🔄 刷新中…'; }
+  if(status) status.textContent = '正在拉取腾讯接口…';
+
+  // 准备代码 + 市场前缀
+  const tencentPrefix = (c)=>{
+    if(c.mkt==='HK') return 'hk'+c.code;
+    if(c.mkt==='US') return 'us'+c.code;
+    if(c.code.startsWith('6')||c.code.startsWith('9')) return 'sh'+c.code;
+    if(c.code.startsWith('8')) return 'bj'+c.code;
+    return 'sz'+c.code;
+  };
+  const targets = COMPANIES.filter(c=>c.price!=null && ['SH','SZ','BJ','HK','US'].includes(c.mkt));
+  const codeMap = {};
+  targets.forEach(c=>{ codeMap[tencentPrefix(c)] = c; });
+
+  // 1. 批量实时行情（GBK），单批 20 只
+  const allPrefixed = Object.keys(codeMap);
+  const batchSize = 20;
+  let okCount = 0;
+  for(let i=0; i<allPrefixed.length; i+=batchSize){
+    const batch = allPrefixed.slice(i, i+batchSize);
+    try{
+      const url = 'https://qt.gtimg.cn/q='+batch.join(',');
+      const resp = await fetch(url);
+      const buf = await resp.arrayBuffer();
+      const text = new TextDecoder('gbk').decode(buf);
+      text.split('\n').forEach(line=>{
+        const m = line.match(/v_([a-z]{2}\d{5,6})="([^"]+)"/i);
+        if(!m) return;
+        const c = codeMap[m[1]];
+        if(!c) return;
+        const v = m[2].split('~');
+        if(v.length < 50) return;
+        const flt = (s)=>{ if(!s||s==='-'||s==='--')return null; const n=parseFloat(s); return isNaN(n)?null:n; };
+        c.price = flt(v[3]);
+        c.change = flt(v[32]);
+        const ttmPe = flt(v[39]);
+        c.dynPe = (ttmPe!=null && Math.abs(ttmPe)<1e6) ? ttmPe : null;
+        c.marketCap = flt(v[44]);
+        // 注意：ROE 不在腾讯返回里，保持 c.roe 不变
+        okCount++;
+      });
+    }catch(e){ console.warn('quote batch fail:', e); }
+  }
+
+  // 2. K 线接口算 5d/20d/52周
+  if(status) status.textContent = `行情已更新 ${okCount} 家，正在拉 K 线…`;
+  let klOk = 0;
+  await Promise.all(targets.map(async c=>{
+    try{
+      const p = tencentPrefix(c);
+      const url = `https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=${p},day,,,260,qfq`;
+      const r = await fetch(url);
+      const j = await r.json();
+      const node = (j.data||{})[p] || {};
+      const k = node.qfqday || node.day || node.kline || [];
+      if(k.length < 5) return;
+      const last = parseFloat(k[k.length-1][2]);
+      const c5 = k.length>=5 ? parseFloat(k[k.length-5][2]) : last;
+      const c20 = k.length>=20 ? parseFloat(k[k.length-20][2]) : last;
+      c.chg5d = c5? ((last-c5)/c5*100) : null;
+      c.chg20d = c20? ((last-c20)/c20*100) : null;
+      const closes = k.map(x=>parseFloat(x[2])).filter(x=>!isNaN(x));
+      if(closes.length){
+        const hi = Math.max(...closes), lo = Math.min(...closes);
+        c.pos52w = hi? ((last-hi)/hi*100) : null;
+        c.pct52w = (hi!==lo) ? Math.round((last-lo)/(hi-lo)*100) : 50;
+        // 重算估值温度
+        if(c.dynPe==null || c.dynPe<0){ c.valTag='warm'; c.valLbl=c.dynPe<0?'亏损':'PE缺失'; }
+        else if(c.dynPe>=200){ c.valTag='hot'; c.valLbl='PE极高'; }
+        else if(c.dynPe>=60 && c.pos52w>-8){ c.valTag='hot'; c.valLbl='高位高估'; }
+        else if(c.dynPe>=60){ c.valTag='warm'; c.valLbl='偏高'; }
+        else if(c.pos52w<-30){ c.valTag='low'; c.valLbl='深度回调'; }
+        else { c.valTag='fair'; c.valLbl='相对合理'; }
+      }
+      klOk++;
+    }catch(e){ console.warn('kline fail:', c.code, e); }
+  }));
+
+  if(btn){ btn.disabled = false; btn.textContent = '🔄 刷新行情'; }
+  const now = new Date();
+  const ts = now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0')
+           +' '+String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+  if(status) status.textContent = `已更新 ${okCount}/${targets.length} 家 · 实时刷新于 ${ts}`;
+  mount();
+}
+function switchTab(name){
+  curTab = name;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active', t.dataset.tab===name));
+  mount();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>switchTab(t.dataset.tab)));
+document.getElementById('themeBtn').addEventListener('click',()=>{
+  const cur = document.body.dataset.theme;
+  document.body.dataset.theme = cur==='dark'?'light':'dark';
+});
+
+mount();
+
+</script>
+</body>
+</html>
