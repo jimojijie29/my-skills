@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>2026.08.31 沃什新规则·地产保底·9月中旬窗口 V2.0 - 莫大仙岳居</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0a1a;--primary:#0f3460;--accent:#e94560;--gold:#ffd700;
+  --up:#e94560;--down:#00b050;--ink:#e0e0e0;
+}
+body{font-family:"Microsoft YaHei","微软雅黑",sans-serif;background:var(--bg);color:var(--ink);line-height:1.75}
+html{scroll-behavior:smooth}
+
+/* 顶部阅读进度条 */
+.progress-bar{position:fixed;top:0;left:0;height:4px;width:0;z-index:1200;
+  background:linear-gradient(90deg,#e94560,#ffd700);box-shadow:0 0 10px rgba(233,69,96,.6);transition:width .1s}
+
+/* 快速导航 */
+.quick-nav{position:fixed;top:50%;right:18px;transform:translateY(-50%);z-index:1000;background:rgba(15,52,96,0.92);padding:15px 11px;border-radius:30px;box-shadow:0 6px 18px rgba(0,0,0,0.3)}
+.quick-nav-btn{display:flex;width:40px;height:40px;margin:9px 0;background:#e94560;color:#fff;border:none;border-radius:50%;cursor:pointer;font-size:1.05em;font-weight:bold;align-items:center;justify-content:center;text-decoration:none;transition:all .3s;font-family:inherit}
+.quick-nav-btn:hover{background:#c0392b;transform:scale(1.1)}
+.quick-nav-btn.active{background:var(--gold);color:#1a1a2e}
+.scroll-indicator{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.9);font-size:2em;animation:bounce 2s infinite;z-index:1000;transition:opacity .4s}
+@keyframes bounce{0%,20%,50%,80%,100%{transform:translateX(-50%) translateY(0)}40%{transform:translateX(-50%) translateY(-12px)}60%{transform:translateX(-50%) translateY(-6px)}}
+
+.slide{min-height:100vh;padding:60px 80px;display:flex;flex-direction:column;justify-content:center;border-bottom:1px solid rgba(255,255,255,.05)}
+.cover-slide{background:linear-gradient(135deg,#0f3460 0%,#16213e 50%,#1a1a2e 100%);align-items:center;text-align:center;position:relative;overflow:hidden}
+.cover-slide::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 30% 40%,rgba(233,69,96,.18) 0%,transparent 60%),radial-gradient(ellipse at 75% 70%,rgba(255,215,0,.08) 0%,transparent 55%)}
+.cover-slide>*{position:relative;z-index:1}
+.v-badge{position:absolute;top:34px;right:44px;z-index:2;background:var(--gold);color:#1a1a2e;font-weight:900;letter-spacing:1px;padding:6px 16px;border-radius:8px;font-size:.85em;box-shadow:0 4px 14px rgba(255,215,0,.3)}
+.cover-badge{display:inline-block;background:rgba(233,69,96,.2);border:1px solid #e94560;color:#e94560;padding:6px 20px;border-radius:20px;font-size:.9em;letter-spacing:2px;margin-bottom:24px}
+.cover-title{font-size:3em;font-weight:800;color:#fff;line-height:1.28;margin-bottom:16px;letter-spacing:1px}
+.cover-title span{color:#e94560}
+.cover-subtitle{font-size:1.2em;color:rgba(255,255,255,.72);margin-bottom:34px}
+.cover-meta{display:flex;gap:38px;justify-content:center;flex-wrap:wrap;margin-bottom:12px}
+.cover-meta-item{text-align:center}
+.cover-meta-label{font-size:.78em;color:rgba(255,255,255,.5);letter-spacing:1px}
+.cover-meta-value{font-size:1.05em;color:#ffd700;font-weight:bold}
+
+/* 封面核心指标看板 */
+.kpi-strip{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:26px}
+.kpi{min-width:150px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:16px 20px}
+.kpi .k-val{font-size:1.5em;font-weight:800;line-height:1}
+.kpi .k-lab{font-size:.76em;color:rgba(255,255,255,.55);margin-top:8px}
+
+.cover-agenda{margin-top:34px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:22px 40px;text-align:left;max-width:860px}
+.cover-agenda h3{color:#ffd700;margin-bottom:14px;font-size:1em;border:none;padding:0;display:block}
+.cover-agenda-item{display:flex;align-items:center;gap:12px;margin-bottom:10px;font-size:.95em;color:rgba(255,255,255,.85)}
+.agenda-num{background:#e94560;color:#fff;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75em;font-weight:bold;flex-shrink:0}
+
+.section-slide{background:linear-gradient(135deg,#0f3460 0%,#1a1a2e 100%);align-items:flex-start;justify-content:center;padding:80px;min-height:56vh;position:relative;overflow:hidden}
+.section-slide::after{content:attr(data-ghost);position:absolute;right:40px;bottom:-30px;font-size:11em;font-weight:900;color:rgba(255,255,255,.03);line-height:1;letter-spacing:4px}
+.section-num{font-size:5em;font-weight:900;color:rgba(233,69,96,.22);line-height:1;margin-bottom:8px}
+.section-slide h2{font-size:2.5em;color:#fff;font-weight:800;margin-bottom:14px}
+.section-slide p{font-size:1.12em;color:rgba(255,255,255,.62);max-width:760px}
+.section-tag{display:inline-block;background:#e94560;color:#fff;padding:4px 14px;border-radius:4px;font-size:.8em;margin-bottom:16px;letter-spacing:1px}
+/* 章节一句话结论条 */
+.tldr{margin-top:26px;background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.3);border-left:5px solid var(--gold);border-radius:0 10px 10px 0;padding:14px 22px;max-width:760px}
+.tldr b{color:var(--gold)}
+
+.slide h3{font-size:1.6em;color:#fff;margin-bottom:24px;padding-bottom:12px;border-bottom:2px solid #e94560;display:flex;align-items:center;gap:12px}
+.slide p{color:rgba(255,255,255,.82);margin-bottom:14px;font-size:.95em}
+
+.data-box,.insight-box,.strategy-box,.danger-box,.tech-box,.cycle-box,.stock-box{border-radius:10px;padding:20px}
+.data-box{background:linear-gradient(135deg,rgba(15,52,96,.8),rgba(22,33,62,.8));border:1px solid rgba(100,160,255,.3);border-left:4px solid #4a9eff}
+.insight-box{background:linear-gradient(135deg,rgba(40,30,0,.8),rgba(60,45,0,.8));border:1px solid rgba(255,215,0,.3);border-left:4px solid #ffd700}
+.strategy-box{background:linear-gradient(135deg,rgba(0,40,20,.8),rgba(0,60,30,.8));border:1px solid rgba(0,176,80,.3);border-left:4px solid #00b050}
+.danger-box{background:linear-gradient(135deg,rgba(80,0,20,.8),rgba(100,0,30,.8));border:1px solid rgba(233,69,96,.4);border-left:4px solid #e94560}
+.tech-box{background:linear-gradient(135deg,rgba(40,0,80,.8),rgba(60,0,100,.8));border:1px solid rgba(180,100,255,.3);border-left:4px solid #b064ff}
+.cycle-box{background:linear-gradient(135deg,rgba(60,30,0,.8),rgba(80,45,0,.8));border:1px solid rgba(255,140,0,.3);border-left:4px solid #ff8c00}
+.stock-box{background:linear-gradient(135deg,rgba(0,50,60,.8),rgba(0,70,80,.8));border:1px solid rgba(0,200,200,.3);border-left:4px solid #00c8c8}
+.box-title{font-size:.85em;font-weight:bold;letter-spacing:1px;margin-bottom:12px}
+.data-box .box-title{color:#4a9eff}
+.insight-box .box-title{color:#ffd700}
+.strategy-box .box-title{color:#00b050}
+.danger-box .box-title{color:#e94560}
+.tech-box .box-title{color:#b064ff}
+.cycle-box .box-title{color:#ff8c00}
+.stock-box .box-title{color:#00c8c8}
+
+.bullet-list{list-style:none;margin:0;padding:0}
+.bullet-list li{padding:6px 0 6px 20px;position:relative;color:rgba(255,255,255,.85);font-size:.92em;border-bottom:1px solid rgba(255,255,255,.05)}
+.bullet-list li:last-child{border-bottom:none}
+.bullet-list li::before{content:"▸";position:absolute;left:0;color:#e94560}
+.data-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.9em}
+.data-table th{background:rgba(15,52,96,.8);color:#4a9eff;padding:10px 14px;text-align:left;font-weight:bold;border-bottom:2px solid rgba(100,160,255,.3)}
+.data-table td{padding:9px 14px;border-bottom:1px solid rgba(255,255,255,.07);color:rgba(255,255,255,.85)}
+.highlight{color:#e94560;font-weight:bold}
+.green{color:#00b050;font-weight:bold}
+.gold{color:#ffd700;font-weight:bold}
+.muted{color:rgba(255,255,255,.5);font-size:.85em}
+.chart-img{width:100%;max-width:900px;border-radius:10px;border:1px solid rgba(255,255,255,.1);margin:16px auto;display:block}
+.img-caption{text-align:center;font-size:.8em;color:rgba(255,255,255,.4);margin-top:6px;margin-bottom:16px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:20px 0}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin:20px 0}
+.img-pair{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:10px 0}
+.img-pair .chart-img{max-width:100%;margin:0 auto}
+
+/* 指标卡片行 */
+.metric-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:18px 0}
+.metric{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:16px;text-align:center}
+.metric .m-val{font-size:1.55em;font-weight:800;line-height:1.1}
+.metric .m-lab{font-size:.75em;color:rgba(255,255,255,.55);margin-top:8px}
+
+/* 对比双栏（旧规则 vs 新规则等） */
+.vs-wrap{display:grid;grid-template-columns:1fr 60px 1fr;align-items:stretch;gap:0;margin:20px 0}
+.vs-mid{display:flex;align-items:center;justify-content:center;color:var(--gold);font-weight:900;font-size:1.3em}
+
+.quote-box{background:rgba(255,255,255,.04);border-left:4px solid #ffd700;border-radius:0 10px 10px 0;padding:16px 24px;margin:20px 0;font-style:italic;color:rgba(255,255,255,.8);font-size:.95em}
+.quote-box cite{display:block;margin-top:8px;font-style:normal;color:#ffd700;font-size:.85em}
+
+.ending-slide{background:linear-gradient(135deg,#0f3460 0%,#16213e 50%,#1a1a2e 100%);align-items:center;text-align:center}
+.ending-slide h2{font-size:2.2em;color:#fff;margin-bottom:24px}
+.tag-pill{display:inline-block;background:rgba(233,69,96,.15);border:1px solid rgba(233,69,96,.4);color:#ff8fa3;border-radius:16px;padding:4px 14px;margin:4px;font-size:.82em}
+
+@media(max-width:768px){.slide{padding:40px 24px}.cover-title{font-size:1.9em}.two-col,.three-col,.img-pair,.metric-row,.vs-wrap{grid-template-columns:1fr}.vs-mid{transform:rotate(90deg);padding:8px 0}.quick-nav{right:8px}.v-badge{top:14px;right:14px}}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<div class="quick-nav" id="quickNav">
+  <a href="#top" class="quick-nav-btn" title="返回顶部">↑</a>
+  <a href="#s-macro" class="quick-nav-btn" data-sec title="沃什新规则">沃</a>
+  <a href="#s-property" class="quick-nav-btn" data-sec title="地产政策与走势">地</a>
+  <a href="#s-us" class="quick-nav-btn" data-sec title="新时代输赢与美股">美</a>
+  <a href="#s-liq" class="quick-nav-btn" data-sec title="流动性与仓位">仓</a>
+  <a href="#s-index" class="quick-nav-btn" data-sec title="指数波动结构">指</a>
+  <a href="#s-stock" class="quick-nav-btn" data-sec title="个股精选">股</a>
+  <a href="#ending" class="quick-nav-btn" title="直达底部">↓</a>
+</div>
+
+<div class="scroll-indicator" id="scrollIndicator">↓</div>
+
+<!-- ============ COVER ============ -->
+<div id="top" class="slide cover-slide">
+  <div class="v-badge">V2.0 重构版</div>
+  <div class="cover-badge">私域直播 · 莫大仙岳居</div>
+  <h1 class="cover-title">沃什杰克逊霍尔新规则<br><span>地产保底 · 9月中旬窗口</span></h1>
+  <p class="cover-subtitle">无指引、无预判、无政策兜底——举证责任反转之后，半仓都显得过重</p>
+  <div class="cover-meta">
+    <div class="cover-meta-item"><div class="cover-meta-label">直播日期</div><div class="cover-meta-value">2026年8月31日（周一·月末）</div></div>
+    <div class="cover-meta-item"><div class="cover-meta-label">直播类型</div><div class="cover-meta-value">私域直播</div></div>
+    <div class="cover-meta-item"><div class="cover-meta-label">主讲</div><div class="cover-meta-value">莫大仙岳居</div></div>
+    <div class="cover-meta-item"><div class="cover-meta-label">市场状态</div><div class="cover-meta-value">缩量·新存量博弈</div></div>
+  </div>
+
+  <div class="kpi-strip">
+    <div class="kpi"><div class="k-val highlight">≈60%</div><div class="k-lab">美联储加息概率</div></div>
+    <div class="kpi"><div class="k-val highlight">+11 / +10 bp</div><div class="k-lab">1年 / 2年期利率</div></div>
+    <div class="kpi"><div class="k-val green">2.2619万亿</div><div class="k-lab">两市融资余额</div></div>
+    <div class="kpi"><div class="k-val gold">半仓以内</div><div class="k-lab">建议仓位上限</div></div>
+  </div>
+
+  <div class="cover-agenda">
+    <h3>◌ 本期大纲</h3>
+    <div class="cover-agenda-item"><span class="agenda-num">1</span><span>聊聊凯文·沃什杰克逊霍尔讲话的意义，与美联储加息预期升温</span></div>
+    <div class="cover-agenda-item"><span class="agenda-num">2</span><span>聊聊房地产政策变化与市场实际走势</span></div>
+    <div class="cover-agenda-item"><span class="agenda-num">3</span><span>聊聊市场众指数波动结构观察，市场板块观察。讲讲股票</span></div>
+  </div>
+</div>
+
+<!-- ============ CHAPTER 01 ============ -->
+<div id="s-macro" class="slide section-slide" data-ghost="WARSH">
+  <div class="section-tag">CHAPTER 01</div>
+  <div class="section-num">01</div>
+  <h2>沃什杰克逊霍尔：美联储新规则</h2>
+  <p>周五讲话听着云里雾里，加息概率却飙到接近 60%。真正变的不是利率数字，是举证责任——市场默认状态从「宽松」翻成了「偏紧」。</p>
+  <div class="tldr"><b>一句话结论：</b>废除点阵图、取消前瞻指引，判断松紧的权力交给财政部；<b>高利率不再等于收紧</b>，市场默认偏紧。</div>
+</div>
+
+<div class="slide">
+  <h3>■ 月末继续下跌：先把利率结构看清楚</h3>
+  <p>今天是 8 月 31 号月末，市场继续下跌。现在这个结果其实已经算不错了。真正要问的是：为什么还在跌？周五凯文·沃什在杰克逊霍尔央行年会发表讲话，主题叫<span class="gold">《我们的时代》</span>（或作《时代在变》），听完大家云里雾里，随后加息概率飙升，大约 50% 多、接近 <span class="highlight">60%</span>。</p>
+  <div class="metric-row">
+    <div class="metric"><div class="m-val highlight">+11 bp</div><div class="m-lab">1年期</div></div>
+    <div class="metric"><div class="m-val highlight">+10 bp</div><div class="m-lab">2年期</div></div>
+    <div class="metric"><div class="m-val muted">变化小</div><div class="m-lab">10年期及以上</div></div>
+    <div class="metric"><div class="m-val gold">160.230</div><div class="m-lab">日元最高</div></div>
+  </div>
+  <img src="Picture/美国各期国债收益率-8.31.PNG" alt="美国各期国债收益率" class="chart-img">
+  <p class="img-caption">美国各期国债收益率（截至2026年8月末）</p>
+  <div class="two-col">
+    <div class="data-box">
+      <div class="box-title">这一次涨的是中期，不是长端</div>
+      <ul class="bullet-list">
+        <li>1 年期 <span class="highlight">+11 bp</span>、2 年期 <span class="highlight">+10 bp</span>，在债券市场等同于大跌</li>
+        <li>10 年期以上长端并未同步暴涨；短期也有小幅抛售</li>
+        <li>两年期上行速度明显快于十年期</li>
+      </ul>
+    </div>
+    <div class="danger-box">
+      <div class="box-title">美日联合干预，很可能失败了</div>
+      <ul class="bullet-list">
+        <li>美日联合干预日元，本意是压住美国<span class="highlight">十年期利率</span>不要抬太高</li>
+        <li>日元周五再跌破 160，最高 <span class="gold">160.230</span>，今天又回落到 160 之下</li>
+        <li>15 分钟低点上移呈<span class="highlight">非推动浪</span>，进入超卖区、还没底背离，预期还会有一个底背离</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="slide">
+  <h3>■ 《我们的时代》：旧「静厅」被推翻</h3>
+  <p>旧时代的美联储被形容为「静厅」：先给市场某种预期，市场按预期定价，美联储再看经济数据来调节。一路下来，最终什么都没调节好。沃什把这套传统推翻了。</p>
+  <div class="vs-wrap">
+    <div class="cycle-box">
+      <div class="box-title">旧「静厅」：给预期，再观察</div>
+      <ul class="bullet-list">
+        <li>先口头给出路径，市场据此定价</li>
+        <li>再根据就业、通胀数据微调</li>
+        <li>每次重大言论，市场都去押注美联储的<span class="highlight">「看跌期权」</span>（兜底预期）</li>
+        <li>静态死循环，养出一套畸形体系</li>
+      </ul>
+    </div>
+    <div class="vs-mid">➜</div>
+    <div class="insight-box">
+      <div class="box-title">新规则：不兜底，不给答案</div>
+      <ul class="bullet-list">
+        <li>不对市场兜底，也不给出明确预期，所以听着云里雾里</li>
+        <li>综合各种权重来调整，而不直接干预市场</li>
+        <li>「重大讲话 = 可押注兜底」的习惯，失效了</li>
+        <li>这是体系层面的改变，不是一次鹰派嘴炮</li>
+      </ul>
+    </div>
+  </div>
+  <div class="quote-box">「他不对市场进行兜底，也不给出任何明确预期，所以大家听起来觉得云里雾里。」<cite>——莫大仙岳居</cite></div>
+</div>
+
+<div class="slide">
+  <h3>■ 三件事被改掉：沟通、指引、考核指标</h3>
+  <div class="three-col">
+    <div class="data-box">
+      <div class="box-title">① 沟通频率</div>
+      <p>降低官方沟通频率。市场少听「安抚」，也就少了可交易的确定性。</p>
+    </div>
+    <div class="danger-box">
+      <div class="box-title">② 前瞻性指引</div>
+      <p>弱化并取消前瞻性指引，<span class="highlight">废除点阵图</span>，不再口头安抚，不做政策承诺，彻底剥夺市场提前预判的确定性。</p>
+    </div>
+    <div class="insight-box">
+      <div class="box-title">③ 考核数据</div>
+      <p>告别单一「就业 + 通胀」。全面纳入信贷松紧、市场流动性、资产价格、汇率、大宗商品等金融条件，判断市场松紧。</p>
+    </div>
+  </div>
+  <div class="two-col">
+    <div class="tech-box">
+      <div class="box-title">高利率 ≠ 货币收紧</div>
+      <ul class="bullet-list">
+        <li>只要信用扩张、融资宽松、市场情绪火热，美联储就仍有<span class="highlight">继续收紧的空间</span></li>
+        <li>美国目前的高利率，不等于货币已经收紧到位</li>
+      </ul>
+    </div>
+    <div class="danger-box">
+      <div class="box-title">零利率变动 ≠ 市场宽松</div>
+      <ul class="bullet-list">
+        <li>只要信贷收缩、流动性退潮，即便利率不变，货币紧缩的效果也已落地</li>
+        <li>看松紧，不要只看政策利率——这一段必须记住</li>
+      </ul>
+    </div>
+  </div>
+  <div class="quote-box">「高利率不等于货币在收紧。零利率的变动也不等于市场宽松。只要信贷收缩、流动性退潮，即便利率不变，紧缩已经落地。」<cite>——莫大仙岳居</cite></div>
+</div>
+
+<div class="slide">
+  <h3>■ 举证反转：默认状态从宽松翻成偏紧</h3>
+  <p>沃什一直秉持收缩市场流动性、收缩国债、减少美国政府负债。新规则落地之后，举证的责任彻底反转——判断市场是否宽松的任务，实际上交给了美国财政部。</p>
+  <div class="vs-wrap">
+    <div class="cycle-box">
+      <div class="box-title">旧规则</div>
+      <ul class="bullet-list">
+        <li>市场要找数据，证明美联储<span class="highlight">为何要加息</span></li>
+        <li>默认状态：<span class="gold">宽松</span></li>
+        <li>加息才需要「证据」</li>
+      </ul>
+    </div>
+    <div class="vs-mid">⇄</div>
+    <div class="danger-box">
+      <div class="box-title">新规则</div>
+      <ul class="bullet-list">
+        <li>需要找证据，证明美联储<span class="highlight">为何可以不加息</span></li>
+        <li>默认状态：<span class="gold">偏紧</span></li>
+        <li>不加息才需要「证据」</li>
+      </ul>
+    </div>
+  </div>
+  <img src="Picture/美国10年、2年期国债收益率曲线-8.31.PNG" alt="美国10年、2年期国债收益率曲线" class="chart-img">
+  <p class="img-caption">美国 10 年期与 2 年期国债收益率曲线</p>
+  <div class="two-col">
+    <div class="data-box">
+      <div class="box-title">曲线在说什么</div>
+      <ul class="bullet-list">
+        <li>两年期上行速度明显快于十年期</li>
+        <li>3 个月期与 10 年期利差仍约 <span class="gold">0.83%</span>，跟上周直播时一样，倒挂未变</li>
+        <li>收益率曲线越朝下，市场实际处于<span class="highlight">收缩状态</span></li>
+      </ul>
+    </div>
+    <div class="insight-box">
+      <div class="box-title">周五汇率大动的含义</div>
+      <ul class="bullet-list">
+        <li>人们在抛售 1 年期、2 年期中期债券</li>
+        <li>长期债券利率变化反而比较小</li>
+        <li>这比「听懂讲话」更能说明市场在给什么定价</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="slide">
+  <h3>■ TGA 仍在高位，三国利率各走各的</h3>
+  <img src="Picture/美国财政部TGA账户余额与标普500指数收盘-8.31.PNG" alt="美国财政部TGA账户余额与标普500指数收盘" class="chart-img">
+  <p class="img-caption">美国财政部 TGA 账户余额与标普500收盘（表格数据应为 8 月 27 日）</p>
+  <div class="two-col">
+    <div class="data-box">
+      <div class="box-title">财政部这边并不松</div>
+      <ul class="bullet-list">
+        <li>TGA 账户余额反而在<span class="highlight">上涨</span></li>
+        <li>市场依然维持在高位盘整</li>
+        <li>从财政部货币宽松的状态看，目前谈不上放水</li>
+      </ul>
+    </div>
+    <div class="cycle-box">
+      <div class="box-title">三国 10 年期</div>
+      <table class="data-table">
+        <tr><th>国家</th><th>10年期</th><th>动向</th></tr>
+        <tr><td>日本</td><td class="gold">0.931%</td><td><span class="highlight">▲ 约+1bp</span></td></tr>
+        <tr><td>中国</td><td>几乎不动</td><td><span class="muted">— 盘整</span></td></tr>
+        <tr><td>美国</td><td>中期急升</td><td><span class="highlight">▲ 中期领涨</span></td></tr>
+      </table>
+      <p class="muted">中国收益率若下行，人民币本应走强；实际汇率盘整、人民币小幅升值，购汇流出仍严格控制。</p>
+    </div>
+  </div>
+  <img src="Picture/中美日10年期国债收益率与利差对比-8.31.PNG" alt="中美日10年期国债收益率与利差对比" class="chart-img">
+  <p class="img-caption">中美日 10 年期国债收益率与利差对比</p>
+</div>
+
+<div class="slide">
+  <h3>■ 中国国债指数：小跌，资金在往证券市场迁</h3>
+  <img src="Picture/中国国债指数（净）-8.31.PNG" alt="中国国债指数（净）" class="chart-img">
+  <p class="img-caption">中国国债指数（净）</p>
+  <div class="two-col">
+    <div class="data-box">
+      <div class="box-title">国债指数小幅下跌</div>
+      <ul class="bullet-list">
+        <li>没有大变化，只是小幅下跌</li>
+        <li>说明短期有资金在向<span class="gold">证券市场迁徙</span></li>
+      </ul>
+    </div>
+    <div class="insight-box">
+      <div class="box-title">钟才文连续四篇：4.7% 可以接受</div>
+      <ul class="bullet-list">
+        <li>前面讲过《钟才文》连续四篇文章</li>
+        <li>对上半年 <span class="gold">4.7%</span> 的经济增速给出定位：可以接受，也合理</li>
+        <li>国家层面表示可以接受现状，我们也只能接受</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CHAPTER 02 ============ -->
+<div id="s-property" class="slide section-slide" data-ghost="LAND">
+  <div class="section-tag">CHAPTER 02</div>
+  <div class="section-num">02</div>
+  <h2>地产政策变化与市场实际走势</h2>
+  <p>约 4 万亿保底政策冒头，集合竞价 68 家涨停，开盘就分化。政策有，市场不买账，月线仍是底分型平台整理。</p>
+  <div class="tldr"><b>一句话结论：</b>这是<b>保底政策</b>不是全面刺激；4 万亿撬 12 万亿是算术，173 万亿存款不动才是现实，等第二笔上行再逢低布局。</div>
+</div>
+
+<div class="slide">
+  <h3>■ 4 万亿保底：租售同权、公租房、政府下场收房</h3>
+  <p>大约 23 号前后，团队里层级比较高的一位同事讲过：下半年可能推出地产政策，规模大约 <span class="highlight">4 万亿</span>。这些信息今天才冒出来。</p>
+  <div class="two-col">
+    <div class="insight-box">
+      <div class="box-title">政策指向</div>
+      <ul class="bullet-list">
+        <li>主要针对<span class="gold">租售同权</span>以及公租房</li>
+        <li>政府下场收购「二手新房」做公租房</li>
+        <li>同时收购一些跌得比较透的二手房，改造成公租房</li>
+        <li>新房销售政策也会发生改变</li>
+        <li>贷款最长期限可延期到 <span class="gold">40 年</span>，存量贷款利率可与银行议价</li>
+      </ul>
+    </div>
+    <div class="danger-box">
+      <div class="box-title">早盘：高开，然后不行</div>
+      <ul class="bullet-list">
+        <li>集合竞价阶段地产股统一高开</li>
+        <li>大约 <span class="highlight">68 家</span>在 9:15 以后开在涨停板</li>
+        <li>一开盘就不行，物业管理相对好一点，后面跌停的依然有</li>
+        <li>这是保底政策，不是全面刺激</li>
+      </ul>
+    </div>
+  </div>
+  <div class="data-box">
+    <div class="box-title">为什么只能保底：钱锁死了</div>
+    <ul class="bullet-list">
+      <li>7 月央行数据：企业与民间信贷大幅减少，主要增加的是<span class="gold">再贷款和发债</span></li>
+      <li>企业和民间的钱基本锁死，资金趴在银行里，不去投资运转</li>
+      <li>地方政府化解地产债务还处于最后攻坚阶段，手上也没有钱</li>
+      <li>住房是大宗耐用品，也是一种消费；触动消费的一部分，但市场似乎不太买账</li>
+    </ul>
+  </div>
+</div>
+
+<div class="slide">
+  <h3>■ 地产指数月线：高开低走，平台整理</h3>
+  <img src="Picture/地产指数-月线-8.31.PNG" alt="地产指数月线" class="chart-img">
+  <p class="img-caption">地产指数月线：底分型平台整理阶段</p>
+  <div class="two-col">
+    <div class="tech-box">
+      <div class="box-title">今天这一根怎么看</div>
+      <ul class="bullet-list">
+        <li>房地产板块<span class="green">高开低走</span>，今天是放量的</li>
+        <li>开盘过高必然引发抛售；需要止损的资金仍在继续抛</li>
+        <li>市场对政策的反应通常会滞后一步，后续还需要时间积蓄力量</li>
+        <li>月线尚不确定是否形成底分型，但确定处于月线级别的<span class="gold">底分型平台整理</span></li>
+      </ul>
+    </div>
+    <div class="strategy-box">
+      <div class="box-title">结构：ABC 基本完成，等第二笔</div>
+      <ul class="bullet-list">
+        <li>ABC 结构已经基本完成，反弹向上已触及并覆盖前期低点</li>
+        <li>低位已形成日线级别底分型，完成一笔上行后进入盘整</li>
+        <li>可预期后续有<span class="highlight">第二笔上行</span></li>
+        <li>若做波段，等后续回调逢低布局更好</li>
+      </ul>
+    </div>
+  </div>
+  <div class="quote-box">「目前这依然是一个平台整理的过程。如果开盘过高，必然会引发抛售。」<cite>——莫大仙岳居</cite></div>
+</div>
+
+<div class="slide">
+  <h3>■ 12 万亿是算术，173 万亿才是现实</h3>
+  <div class="metric-row">
+    <div class="metric"><div class="m-val highlight">4万亿</div><div class="m-lab">政策规模</div></div>
+    <div class="metric"><div class="m-val gold">×1:3</div><div class="m-lab">杠杆撬动</div></div>
+    <div class="metric"><div class="m-val highlight">12万亿</div><div class="m-lab">理论总量</div></div>
+    <div class="metric"><div class="m-val green">173万亿</div><div class="m-lab">居民存款不动</div></div>
+  </div>
+  <div class="two-col">
+    <div class="data-box">
+      <div class="box-title">杠杆撬不动那么多</div>
+      <ul class="bullet-list">
+        <li>4 万亿按 1:3 杠杆，总规模可到 <span class="gold">12 万亿</span></li>
+        <li>若居民真能拿出 12 万亿购房，相当于帮地方政府化解 12 万亿地产债务</li>
+        <li>实际体量达不到这么大，所以一开始对地产政策就持<span class="highlight">谨慎态度</span></li>
+      </ul>
+    </div>
+    <div class="danger-box">
+      <div class="box-title">输入性通缩：钱在，人不花</div>
+      <ul class="bullet-list">
+        <li>我们处于<span class="highlight">输入性通缩</span>，欧、美、日则是通胀</li>
+        <li>通缩的本质：居民不愿意把那 <span class="gold">173 万亿</span>存款拿出来消费或投资</li>
+        <li>贷款利率已降至 <span class="gold">3% 以下</span>，企业和居民依然不愿贷款</li>
+        <li>改变这种局面绝非一朝一夕</li>
+      </ul>
+    </div>
+  </div>
+  <div class="insight-box">
+    <div class="box-title">买房闲话：别急着下手</div>
+    <ul class="bullet-list">
+      <li>北京：价格相对坚挺的是三环与四环之间；二环多是老破小。有同学在怀柔买房，当年约 130 万，现在跌到约 <span class="green">55 万</span>——卖房的是工程施工方，拿到抵工程款的房子急于变现</li>
+      <li>成都供应量太大，等到 <span class="gold">2029 年</span>再看</li>
+      <li>威海乳山 80 平有的连 20 万都不到。买房子，真的不要太早下手</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============ CHAPTER 03 ============ -->
+<div id="s-us" class="slide section-slide" data-ghost="HELL">
+  <div class="section-tag">CHAPTER 03</div>
+  <div class="section-num">03</div>
+  <h2>新时代输赢格局与美股结构</h2>
+  <p>无指引、无预判、无政策兜底。赢家是真实现金流和会看流动性的人；输家是高杠杆、等美联储发看跌期权的那一套。</p>
+  <div class="tldr"><b>一句话结论：</b>美股调整<b>可能才刚刚开始</b>，纳指 B 段或延至 9 月中旬；警惕外部高位破位打击科创50/创业板。</div>
+</div>
+
+<div class="slide">
+  <h3>■ 港股先放一边：平台整理，港元微升</h3>
+  <img src="Picture/恒生指数收盘与港元汇率-8.31.PNG" alt="恒生指数收盘与港元汇率" class="chart-img">
+  <p class="img-caption">恒生指数收盘与港元汇率</p>
+  <div class="two-col">
+    <div class="data-box">
+      <div class="box-title">香港市场</div>
+      <ul class="bullet-list">
+        <li>短期内香港市场也陷入调整，在这里做平台整理是正常的</li>
+        <li>港元汇率开始出现小幅升值</li>
+        <li>部分资金通过南向通道投资港股，可以理解</li>
+      </ul>
+    </div>
+    <div class="insight-box">
+      <div class="box-title">真正改规则的是沃什</div>
+      <ul class="bullet-list">
+        <li>沃什的讲话几乎改变了美股的交易规则</li>
+        <li>未来美国市场乃至全球市场，更要问：新时代开启之后，是不是「地狱模式」</li>
+        <li>官方不再提供标准答案，市场也不再有确定性行情</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="slide">
+  <h3>■ 地狱模式：自负盈亏，输赢格局重构</h3>
+  <div class="danger-box">
+    <div class="box-title">无指引 · 无预判 · 无政策兜底</div>
+    <p>所有行情判断、交易决策以及最终盈亏，都由交易者自行承担。如果这种模式延续下去，未来市场的输赢格局将被彻底重构。</p>
+  </div>
+  <div class="vs-wrap">
+    <div class="strategy-box">
+      <div class="box-title">新时代赢家</div>
+      <ul class="bullet-list">
+        <li>拥有稳定、真实现金流的优质实体企业（也包括交易者）</li>
+        <li>美股 AI 公司里，现金流能覆盖支出的并不多</li>
+        <li>持有高实际利率资产的<span class="gold">债券投资者</span>，债券市场反而可能迎来较大行情</li>
+        <li>精通宏观周期、能判断资金与流动性流向的专业交易者</li>
+      </ul>
+    </div>
+    <div class="vs-mid">VS</div>
+    <div class="danger-box">
+      <div class="box-title">新时代输家</div>
+      <ul class="bullet-list">
+        <li>依赖高杠杆</li>
+        <li>依赖货币宽松</li>
+        <li>依赖美联储兜底套利的资金与交易模式</li>
+        <li>将被陆续清退、彻底淘汰</li>
+      </ul>
+    </div>
+  </div>
+  <div class="quote-box">「在沃什的政策导向下，未来的美股可能要经历一段艰难的地狱之路。」<cite>——莫大仙岳居</cite></div>
+</div>
+
+<div class="slide">
+  <h3>■ 美股结构：第一笔下行已走完，警惕第二笔</h3>
+  <p>这对国内科技类股票影响相对较大。国家出台了一些政策对冲外部风险，但风险不可能被完全对冲掉。若美股在高位维持盘整、高杠杆资金仍在缓慢清退，科技股向下杀估值的过程绝不容忽视。</p>
+  <div class="three-col">
+    <div class="tech-box">
+      <div class="box-title">道琼斯</div>
+      <ul class="bullet-list">
+        <li>15 分钟缺乏连续性，不太理想</li>
+        <li>日线：走完第一笔下行后进入盘整，警惕可能出现的<span class="highlight">第二笔下行</span></li>
+        <li>月线顶分型还未出现；周线顶分型也没有完全确立</li>
+      </ul>
+    </div>
+    <div class="danger-box">
+      <div class="box-title">美股科技股</div>
+      <ul class="bullet-list">
+        <li>第一笔下行已经完成，目前处于盘整（B 段）</li>
+        <li>高度警惕第二笔下行，或 B 段延续</li>
+        <li>B 段并未完全结束；若继续下探，前期低点必然被跌破</li>
+      </ul>
+    </div>
+    <div class="cycle-box">
+      <div class="box-title">纳斯达克</div>
+      <ul class="bullet-list">
+        <li>表面看起来似乎很强势</li>
+        <li>日线级别 B 段盘整的时间还远远不够</li>
+        <li>预计这种盘整可能还要延续到<span class="gold">9 月中旬</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="strategy-box">
+    <div class="box-title">对中国市场意味着什么</div>
+    <ul class="bullet-list">
+      <li>这个低点如果被跌破，对国内市场的伤害有多大，目前很难准确预估</li>
+      <li>国内确有基本面向好、拥有真实现金流的公司，特别是半导体设备及部分细分领域，增长很快</li>
+      <li>若美股科技股下行带动这些优质公司下跌，那是逢低捡拾筹码的时机</li>
+      <li>投资宽基指数的人：最后一波跟风者该在什么位置止损，是一个严峻的问题</li>
+    </ul>
+  </div>
+</div>
+
+<div class="slide">
+  <h3>■ 预警：9 月中旬，外部高位平台或破位</h3>
+  <div class="danger-box">
+    <div class="box-title">时间节点</div>
+    <ul class="bullet-list">
+      <li>在 9 月中旬左右，防范外部市场出现一个高位节点，准备迎接其高位平台破位下行</li>
+      <li>届时对国内科创 50 或创业板的打击可能会比较沉重</li>
+      <li>市场另一端：红利类个股正在发力，支撑着大盘指数的重心</li>
+    </ul>
+  </div>
+  <div class="quote-box">「美国市场的调整可能才刚刚开始。」<cite>——莫大仙岳居</cite></div>
+</div>
+
+<!-- ============ CHAPTER 04 ============ -->
+<div id="s-liq" class="slide section-slide" data-ghost="CASH">
+  <div class="section-tag">CHAPTER 04</div>
+  <div class="section-num">04</div>
+  <h2>新存量博弈与仓位纪律</h2>
+  <p>量化服务器移出、成交远低于 8000 亿及格线、融资余额 2.2619 万亿。没有增量政策之前，半仓都显得过重。</p>
+  <div class="tldr"><b>一句话结论：</b>仓位<b>半仓以内</b>，破位再降到三成；9 月中旬是关键节点（40 日对称，还差约 18 天）。</div>
+</div>
+
+<div class="slide">
+  <h3>■ 从 7 月开始的去杠杆，还在继续</h3>
+  <div class="two-col">
+    <div class="data-box">
+      <div class="box-title">交易量为什么萎缩</div>
+      <ul class="bullet-list">
+        <li>今年 7 月开始，我国市场也经历了一个去杠杆过程</li>
+        <li>整体交易量不断萎缩，与量化交易机构的服务器从券商机房移出有直接关系</li>
+        <li>今天早上还分享过：某券商协助个人大户开通「雪球」产品杠杆交易模式</li>
+        <li>很多券商都在违规擦边球，因为处罚往往落不到具体个人</li>
+      </ul>
+    </div>
+    <div class="danger-box">
+      <div class="box-title">新存量博弈</div>
+      <ul class="bullet-list">
+        <li>不好做的主要原因在于资金供给：剔除大规模量化资金后，活跃度显著下降，资金总量也在萎缩</li>
+        <li>到目前为止，还没有看到国家出台任何鼓励增量资金入市的新政策</li>
+        <li>利好可能还会滞后，监管重心仍是防范风险</li>
+        <li>对市场短期内不能抱有太高预期</li>
+      </ul>
+    </div>
+  </div>
+  <div class="strategy-box">
+    <div class="box-title">操作含义</div>
+    <p>如果认可这个逻辑，操作高弹性交易标的时，一定要注意在反弹的高位节点适当减仓。</p>
+  </div>
+</div>
+
+<div class="slide">
+  <h3>■ 时间尺：40 个交易日的对称，还差大约 18 天</h3>
+  <div class="metric-row">
+    <div class="metric"><div class="m-val gold">40天</div><div class="m-lab">前高→今高（日线）</div></div>
+    <div class="metric"><div class="m-val gold">22天</div><div class="m-lab">当前盘整已走</div></div>
+    <div class="metric"><div class="m-val highlight">≈18天</div><div class="m-lab">距对称周期</div></div>
+    <div class="metric"><div class="m-val highlight">9月中旬</div><div class="m-lab">关键节点</div></div>
+  </div>
+  <div class="two-col">
+    <div class="cycle-box">
+      <div class="box-title">怎么量出来的</div>
+      <ul class="bullet-list">
+        <li>从前期高点到目前的高点，日线级别一共经历了 <span class="gold">40 个交易日</span></li>
+        <li>目前这段盘整才走了 <span class="gold">22 个交易日</span></li>
+        <li>距离 40 个交易日的对称周期还差大约 <span class="highlight">18 个交易日</span></li>
+        <li>时间上略短或略长都有可能；下一个关键节点大概在<span class="gold">9 月中旬</span></li>
+      </ul>
+    </div>
+    <div class="danger-box">
+      <div class="box-title">若走出 C 段</div>
+      <ul class="bullet-list">
+        <li>如果到了 9 月中旬，美股走出向下破位的 C 段，形成 A+B+C 下跌结构，那就非常可怕</li>
+        <li>但愿不会发生，因为第一波 A 段的下跌幅度已经比较长了</li>
+        <li>但必须做好这种预期：年末一段时间，市场可能陷入既无明确方向、又缺乏增量资金驰援的尴尬境地</li>
+      </ul>
+    </div>
+  </div>
+  <div class="insight-box">
+    <div class="box-title">社科院 18 个月窗口</div>
+    <p>社科院关于「中国货币锚点切换及居民资产配置」的报告，给出的时间窗口期是 <span class="gold">18 个月</span>，可能要过渡到明年年中。如果对市场运动规律的预判是准确的，绝大多数普通投资者的仓位绝对不能太高。</p>
+  </div>
+</div>
+
+<div class="slide">
+  <h3>■ 仓位：半仓都显得过重</h3>
+  <div class="three-col">
+    <div class="strategy-box">
+      <div class="box-title">基准</div>
+      <p>建议将仓位控制在<span class="gold">半仓以内</span>。半仓都显得过重。</p>
+    </div>
+    <div class="danger-box">
+      <div class="box-title">若破位</div>
+      <p>若市场真的破位下行，尤其是美股下行并回补下方缺口、临近跌破关键支撑，高波动性品种仓位可能需要进一步降至<span class="highlight">三成以内</span>。</p>
+    </div>
+    <div class="stock-box">
+      <div class="box-title">例外</div>
+      <p>若持有的公司业绩确实非常优异，上涨趋势保持完好，且没有出现高位卖点信号，这类优质资产可以继续持有。</p>
+    </div>
+  </div>
+  <div class="quote-box">「在这种环境下，绝大多数普通投资者的仓位绝对不能太高，半仓都显得过重了。」<cite>——莫大仙岳居</cite></div>
+</div>
+
+<div class="slide">
+  <h3>■ 成交远低于及格线，融资余额 2.2619 万亿</h3>
+  <img src="Picture/沪深均值与两市成交金额-8.31.PNG" alt="沪深均值与两市成交金额" class="chart-img">
+  <p class="img-caption">沪深指数收盘价均值与两市成交金额</p>
+  <div class="data-box">
+    <div class="box-title">成交量</div>
+    <p>原来画的及格线在 <span class="gold">8000 亿</span>左右，目前实际成交额远远低于这个水平。</p>
+  </div>
+  <img src="Picture/沪深均值与两市融资余额-8.31.PNG" alt="沪深均值与两市融资余额" class="chart-img">
+  <p class="img-caption">沪深指数收盘价均值与两市融资余额</p>
+  <img src="Picture/两市融资余额数据汇总-8.31.png" alt="两市融资余额数据汇总" class="chart-img">
+  <p class="img-caption">两市融资余额数据汇总</p>
+  <div class="danger-box">
+    <div class="box-title">融资水平下降</div>
+    <ul class="bullet-list">
+      <li>两市融资余额降到了 <span class="green">2.2619 万亿</span></li>
+      <li>资金连续流出后，板块间又出现「拧麻花」式的混乱状态</li>
+      <li>这些数据都在说明目前的市场状态不对劲</li>
+    </ul>
+  </div>
+</div>
+
+<div class="slide">
+  <h3>■ 板块：半导体、光通信仍在流出</h3>
+  <img src="Picture/行业板块融资余额净流入排行-8.31.png" alt="行业板块融资余额净流入排行" class="chart-img">
+  <p class="img-caption">行业板块融资余额净流入排行</p>
+  <div class="two-col">
+    <div class="data-box">
+      <div class="box-title">谁在进，谁在出</div>
+      <ul class="bullet-list">
+        <li>半导体板块依然是资金<span class="green">净流出</span></li>
+        <li>通信设备（光通信）板块也依然是净流出</li>
+        <li>真正有资金流入的，比如银行板块，流入了 <span class="highlight">3 个亿</span></li>
+        <li>银行一年期存款利率已降到 <span class="gold">0.8%</span>，板块勉强反弹，上涨空间其实不大</li>
+        <li>元器件板块进来的短线多头资金也只有一点点</li>
+      </ul>
+    </div>
+    <div class="insight-box">
+      <div class="box-title">生态没有大改观</div>
+      <ul class="bullet-list">
+        <li>整个市场的生态状态目前并没有大的改观</li>
+        <li>没有哪个板块能够连续领涨超过三天以上时，最有可能出现的机会是<span class="gold">大国企或地方国企的重组</span></li>
+        <li>关注有明确重组方向的品种：第一波可能已经走完，第二波会不会起来还是未知数</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CHAPTER 05 ============ -->
+<div id="s-index" class="slide section-slide" data-ghost="WAVE">
+  <div class="section-tag">CHAPTER 05</div>
+  <div class="section-num">05</div>
+  <h2>指数波动结构观察</h2>
+  <p>上证可能倾斜向下再走三波段；创业板、科创50缺口还在下面。低买高卖，15 分钟找底背驰，集合竞价缩量才是到位信号。</p>
+  <div class="tldr"><b>一句话结论：</b>结构不支持直接向上，<b>缺口大概率要补</b>；用 15 分钟找底背驰，集合竞价缩量 = 调整到位。</div>
+</div>
+
+<div class="slide">
+  <h3>■ 上证指数：突破缺钱，就可能倾斜向下</h3>
+  <img src="Picture/上证指数指数-日线-8.31.PNG" alt="上证指数日线" class="chart-img">
+  <p class="img-caption">上证指数日线</p>
+  <div class="two-col">
+    <div class="tech-box">
+      <div class="box-title">两种可能</div>
+      <ul class="bullet-list">
+        <li>一种可能是直接向上突破</li>
+        <li>若资金量不足无法突破，可能做一个<span class="green">倾斜向下</span>的调整</li>
+        <li>前期下跌是 A 段，目前震荡是 B 段</li>
+        <li>观察指数是否会往下压一下，甚至压到前期低点下方，再走出向上的一笔</li>
+        <li>这样在中观层面上，就能形成一个符合上涨逻辑的<span class="gold">三波段结构</span></li>
+      </ul>
+    </div>
+    <div class="strategy-box">
+      <div class="box-title">交易模式：低买高卖</div>
+      <ul class="bullet-list">
+        <li>在这种框架下，就是等它调整下来，观察低位节点是否出现</li>
+        <li>依然要在 <span class="gold">15 分钟级别</span>上寻找买点</li>
+        <li>若出现一个比前低还要低的低点，观察底背驰一次、两次，甚至三次</li>
+        <li>C 段通常相对较长，需要保持耐心：慢慢走低，指标跟下来，大概率先拉升一下，再回踩，最后再向上突破</li>
+      </ul>
+    </div>
+  </div>
+  <div class="quote-box">「波动结构的演变，本质上反映的就是交易者的人心。」<cite>——莫大仙岳居</cite></div>
+</div>
+
+<div class="slide">
+  <h3>■ 高争民爆：资产置换，用时间换空间</h3>
+  <div class="stock-box">
+    <div class="box-title">基本面就这一句话</div>
+    <p>当前盘整还要持续一段时间，因为这纯粹是资产置换：把民爆资产完全置换成西藏地矿。一根阳线吃掉三根阴线，是一个非常明确的底分型。</p>
+  </div>
+  <div class="two-col">
+    <div class="tech-box">
+      <div class="box-title">怎么看一般盘整</div>
+      <ul class="bullet-list">
+        <li>把图表拉大，把低点和高点连起来，画一个圆，看横盘时间是否足够</li>
+        <li>横盘时间够了，上行的第二笔就可能来</li>
+        <li>底分型走完后，可能出现上行的一笔、两笔，甚至三笔、四笔、五笔</li>
+        <li>不能绝对当真，但交易中必须建立这种预期</li>
+      </ul>
+    </div>
+    <div class="insight-box">
+      <div class="box-title">洗盘法则</div>
+      <p>任何暴涨的品种，如果不以同等程度的暴跌来平衡，那么它必然会用比暴跌长得多的时间来进行横盘消化。讲白了，这就是一个洗盘的过程。</p>
+    </div>
+  </div>
+  <div class="quote-box">「任何暴涨的品种，如果不以同等程度的暴跌来平衡，那么它必然会用比暴跌长得多的时间来进行横盘消化。」<cite>——莫大仙岳居</cite></div>
+</div>
+
+<div class="slide">
+  <h3>■ 创业板：缺口还在下面，光通信和芯片先不行</h3>
+  <img src="Picture/创业板指数-15分钟-8.31.PNG" alt="创业板指数15分钟" class="chart-img">
+  <p class="img-caption">创业板指数 15 分钟</p>
+  <div class="two-col">
+    <div class="tech-box">
+      <div class="box-title">跟上海完全不同</div>
+      <ul class="bullet-list">
+        <li>创业板是一笔直接涨到高点，然后开始向下调整</li>
+        <li>这边超卖了一次，那边超卖了两次，现在这部分并没有超卖</li>
+        <li>近期这一段下行明显比前一段要短得多，还需要一些时间来消化</li>
+        <li>低点上行又没有形成推动浪，怎么可能直接向上？后面肯定还会有一笔回调</li>
+      </ul>
+    </div>
+    <div class="danger-box">
+      <div class="box-title">缺口预期没变</div>
+      <ul class="bullet-list">
+        <li>原来那些光通信或者芯片板块，目前肯定是不行了</li>
+        <li>预期创业板指数下方这两个缺口是要补掉的</li>
+        <li>连线来看，是不是离缺口又近了？</li>
+        <li>反弹时你会激动，以为它会向上突破，但事先就看明白了，它根本上不去</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="slide">
+  <h3>■ 科创 50：这波拉升大概率不是推动浪</h3>
+  <img src="Picture/科创50指数-15分钟-8.31.PNG" alt="科创50指数15分钟" class="chart-img">
+  <p class="img-caption">科创50指数 15 分钟</p>
+  <div class="two-col">
+    <div class="tech-box">
+      <div class="box-title">结构怎么推</div>
+      <ul class="bullet-list">
+        <li>走到当前位置，突然出现一波强力拉升</li>
+        <li>这个地方到底是不是上行推动浪，目前还不好定义，但大概率不是</li>
+        <li>若不是，会先回调向下，然后再向上走一段</li>
+        <li>行情不可能仅凭单一下跌段就直接跌到底，总是来来回回</li>
+        <li>若真的直接跌下去，正好把科创 50 下面的两个缺口补一下，补完还会掉头向上</li>
+      </ul>
+    </div>
+    <div class="strategy-box">
+      <div class="box-title">集合竞价：缩量才是到位</div>
+      <ul class="bullet-list">
+        <li>每天看群里的集合竞价数据</li>
+        <li>只要集合竞价一出现<span class="gold">缩量</span>，基本上调整也就差不多到位了</li>
+        <li>科创板在某个位置集合竞价量最低，第二天就出现了低点——已经没人愿意卖了</li>
+        <li>早盘集合竞价第一笔主动买入的人很少，意味着即将出现低点；一旦出现低点，通常就会有四五天的反弹可以操作</li>
+      </ul>
+    </div>
+  </div>
+  <img src="Picture/两市早盘竞价金额-8.31.png" alt="两市早盘竞价金额" class="chart-img">
+  <p class="img-caption">两市早盘竞价金额</p>
+  <div class="insight-box">
+    <div class="box-title">第二次放量之后的「缩量」</div>
+    <p>连续下跌后突然放量，说明有资金准备接盘。资金进去后发现环境不好，可能又跑。继续跑路之后，第二次放量之后的那个「缩量」，才是真正值得关注的节点。紧接着若第二天小幅放量，基本上就能做出差价空间。这些要靠自己做数据统计，才能形成自己的交易体系。</p>
+  </div>
+</div>
+
+<!-- ============ CHAPTER 06 ============ -->
+<div id="s-stock" class="slide section-slide" data-ghost="STOCK">
+  <div class="section-tag">CHAPTER 06</div>
+  <div class="section-num">06</div>
+  <h2>个股：洗盘、第二增长曲线、先别急</h2>
+  <p>沃特站上 15 分钟 240 均线；澜起有 CXL 但结构还要等第二笔；中微、润泽、华宝都还要回压。拿好筹码，不要像海草一样晃。</p>
+  <div class="tldr"><b>一句话结论：</b>趋势股（海通、南方泵业）<b>按兵不动</b>；半导体系（中微、神工、澜起、润泽、华宝）等回压补缺口再说。</div>
+</div>
+
+<div class="slide">
+  <h3>▪ 沃特股份：公告只有 400 万，不改它是好股票</h3>
+  <div class="img-pair">
+    <div>
+      <img src="Picture/沃特股份-日线-8.31.PNG" alt="沃特股份日线" class="chart-img">
+      <p class="img-caption">沃特股份日线</p>
+    </div>
+    <div>
+      <img src="Picture/沃特股份-15分钟-8.31.PNG" alt="沃特股份15分钟" class="chart-img">
+      <p class="img-caption">沃特股份 15 分钟</p>
+    </div>
+  </div>
+  <div class="two-col">
+    <div class="stock-box">
+      <div class="box-title">今天的公告</div>
+      <ul class="bullet-list">
+        <li>前几天走势非常嚣张，今天发公告：实际相关收益只有 <span class="gold">400 万</span></li>
+        <li>想证明的是：公司确实在做这项业务（PTFE 薄膜 / CPO 相关），只是目前收益还不多</li>
+        <li>以后会不会多，要自己去建立预期</li>
+        <li>资金今天还是把它拉涨停了；涨了 20%，按理说公司应该发异动公告</li>
+      </ul>
+    </div>
+    <div class="strategy-box">
+      <div class="box-title">均线与买点</div>
+      <ul class="bullet-list">
+        <li>底仓成本只有 <span class="gold">0.022</span>。高位不减仓，能怨谁？</li>
+        <li>这里已经出现两次底背驰；4 分钟级别背驰次数还不止这些，随后企稳回升</li>
+        <li>均线参数：4、15、60、240。已成功站上 15 分钟级别的 <span class="gold">240 周期均线</span></li>
+        <li>15 分钟 240 均线换算到日线除以 16，对应日线 15 周期均线。小级别均线上穿、股价站上去，就可以果断操作</li>
+      </ul>
+    </div>
+  </div>
+  <div class="quote-box">「股价上涨靠抖。把不坚定的筹码洗出去，它才能上涨。你不跟着节奏做波段洗盘，肯定要吃亏。不过不跟着做也没关系，只要你熬得住。」<cite>——莫大仙岳居</cite></div>
+</div>
+
+<div class="slide">
+  <h3>▪ 神工股份：葛大佬进来了，但别急着抄</h3>
+  <img src="Picture/神工股份-葛大佬进入前十大股东-8.31.PNG" alt="神工股份葛大佬进入前十大股东" class="chart-img">
+  <p class="img-caption">股东列表：新进股东与关联账户（王萍）</p>
+  <div class="img-pair">
+    <div>
+      <img src="Picture/神工股份-日线-8.31.PNG" alt="神工股份日线" class="chart-img">
+      <p class="img-caption">神工股份日线</p>
+    </div>
+    <div>
+      <img src="Picture/神工股份-15分钟-8.31.PNG" alt="神工股份15分钟" class="chart-img">
+      <p class="img-caption">神工股份 15 分钟</p>
+    </div>
+  </div>
+  <div class="two-col">
+    <div class="stock-box">
+      <div class="box-title">基本面与股东</div>
+      <ul class="bullet-list">
+        <li>群友说葛大佬进入前十大，起初没看到名字；后来发现是新进股东，持股不算多</li>
+        <li>葛大佬妻子叫王萍，他们之间有关联账户</li>
+        <li>主要问题是业绩还没有完全释放。6 月这一段调整确实有点狠</li>
+        <li>这位大佬应该是 6 月份进来的，从低位建仓拉上来。没准下个季度又获利跑掉</li>
+        <li>股票本身没有大问题，基本面在发生积极变化</li>
+      </ul>
+    </div>
+    <div class="tech-box">
+      <div class="box-title">结构：更可能是三波段</div>
+      <ul class="bullet-list">
+        <li>即使这里是向上推动浪，目前走势也不太对，更应该走一个三波段</li>
+        <li>左边貌似推动下跌浪，右边反弹应该是三波段，调整空间可能会比较大</li>
+        <li>做最坏打算：这里走 B 浪调整，耐心等待 B 浪低点</li>
+        <li>15 分钟看不清就结合 4 分钟。1 分钟级别已经不太灵敏，这一段下跌还没有确确实实出现底背驰，还需要再等一等</li>
+      </ul>
+    </div>
+  </div>
+  <div class="quote-box">「买股票是千万不能着急的。」<cite>——莫大仙岳居</cite></div>
+</div>
+
+<div class="slide">
+  <h3>▪ 海通发展：趋势股不要轻易动</h3>
+  <div class="img-pair">
+    <div>
+      <img src="Picture/海通发展-日线-8.31.PNG" alt="海通发展日线" class="chart-img">
+      <p class="img-caption">海通发展日线</p>
+    </div>
+    <div>
+      <img src="Picture/海通发展-月线-8.31.PNG" alt="海通发展月线" class="chart-img">
+      <p class="img-caption">海通发展月线</p>
+    </div>
+  </div>
+  <div class="stock-box">
+    <div class="box-title">大级别越走越漂亮</div>
+    <ul class="bullet-list">
+      <li>今天股价出现一点调整很正常，整个市场也在调整</li>
+      <li>持有优质趋势股，建议不要轻易去动它</li>
+      <li>关键：如果本轮上涨的高点能够突破前期高点，月线级别就会形成一个<span class="gold">底分型结构</span></li>
+      <li>底部结构构筑完成并向上突破，上涨空间将非常巨大，目标空间大致可以推算</li>
+      <li>这类股票千万不要轻易抛掉</li>
+    </ul>
+  </div>
+</div>
+
+<div class="slide">
+  <h3>▪ 澜起科技：CXL 是第二曲线，结构还要等第二笔</h3>
+  <div class="img-pair">
+    <div>
+      <img src="Picture/澜起科技-日线-8.31.PNG" alt="澜起科技日线" class="chart-img">
+      <p class="img-caption">澜起科技日线</p>
+    </div>
+    <div>
+      <img src="Picture/澜起科技-月线-8.31.PNG" alt="澜起科技月线" class="chart-img">
+      <p class="img-caption">澜起科技月线</p>
+    </div>
+  </div>
+  <div class="two-col">
+    <div class="insight-box">
+      <div class="box-title">原来做什么，现在多了什么</div>
+      <ul class="bullet-list">
+        <li>原来主营是内存接口芯片：信号二次放大保真；提高数据交换速度，实现高带宽通信</li>
+        <li>算力机柜里大量 GPU/CPU 并行，大容量存储却常常闲置</li>
+        <li>DDR5、SSD、其他介质速率各不相同。CXL（Compute Express Link）用通信协议芯片，把不同 CPU/GPU 的数据高效输送到「存储池」</li>
+        <li>澜起是全球较早涉足这一领域的企业之一（美国几家起步更早），已跨入 CXL 前沿行业</li>
+        <li>第二增长曲线刚研发出来，送样到三星等代工厂做测试片，存在技术风险，不能打包票</li>
+      </ul>
+    </div>
+    <div class="danger-box">
+      <div class="box-title">现在不要去买</div>
+      <ul class="bullet-list">
+        <li>波动结构明显是下行一笔 + 盘整 + 再下行一笔的三波段</li>
+        <li>三波段走完后目前处于盘整区，后面大概率还会有一笔下行（第二笔下跌）</li>
+        <li>第二笔空间无非是把下方缺口补上；补了，反弹行情才可能真正起来</li>
+        <li>跌到那个位置做个反弹差价可以；做长期投资的，只为这一点利润没啥意思，那就等</li>
+        <li>前期已经做过风险控制，没必要因为这一点下跌空间去卖</li>
+      </ul>
+    </div>
+  </div>
+  <div class="quote-box">「你不能像一根海草一样，市场一有风吹草动，你就跟着不停地波动。那样来回折腾你会头晕的。」<cite>——莫大仙岳居</cite></div>
+</div>
+
+<div class="slide">
+  <h3>▪ 南方泵业：液冷千亿方向，周线底分型在</h3>
+  <img src="Picture/南方泵业-周底分-8.31.PNG" alt="南方泵业周线底分型" class="chart-img">
+  <p class="img-caption">南方泵业周线：上涨中继的周底分型</p>
+  <div class="metric-row">
+    <div class="metric"><div class="m-val highlight">+45.2%</div><div class="m-lab">2025液冷同比</div></div>
+    <div class="metric"><div class="m-val gold">159.8亿</div><div class="m-lab">2026中国规模</div></div>
+    <div class="metric"><div class="m-val gold">破千亿</div><div class="m-lab">2026全球规模</div></div>
+    <div class="metric"><div class="m-val green">周底分型</div><div class="m-lab">上涨中继</div></div>
+  </div>
+  <div class="two-col">
+    <div class="stock-box">
+      <div class="box-title">行业数字</div>
+      <ul class="bullet-list">
+        <li>算力集群的液冷正在替代传统风冷，不同机柜对应不同液冷方案</li>
+        <li>2025 年市场规模已经很高，同比增长 <span class="gold">45.2%</span></li>
+        <li>行业预测：2026 年中国市场规模将达到 <span class="gold">159.8 亿元</span>，全球突破千亿元</li>
+        <li>以我国工业生产能力，中国企业不可能只占 10% 的份额</li>
+        <li>具体到某一家公司营收是几百万、几千万还是上亿，是另外一个层面</li>
+      </ul>
+    </div>
+    <div class="strategy-box">
+      <div class="box-title">走势</div>
+      <ul class="bullet-list">
+        <li>持仓成本很低，所以一点都不怕</li>
+        <li>上涨过程是震荡向上的，肯定还会抖来抖去</li>
+        <li>资金在逐步增仓，成交量放大说明有资金进场</li>
+        <li>周线级别底分型已经出现，这是上涨中继的周底分型。出现了底分型，总得再顺势涨几根 K 线</li>
+        <li>甚至在寻思，是不是要把之前卖掉的那几十万股再买回来</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="slide">
+  <h3>▪ 中微公司：科创 50 第一权重，还要回压洗盘</h3>
+  <div class="img-pair">
+    <div>
+      <img src="Picture/中微公司-日线-8.31.PNG" alt="中微公司日线" class="chart-img">
+      <p class="img-caption">中微公司日线</p>
+    </div>
+    <div>
+      <img src="Picture/中微公司-15分钟-8.31.PNG" alt="中微公司15分钟" class="chart-img">
+      <p class="img-caption">中微公司 15 分钟</p>
+    </div>
+  </div>
+  <div class="two-col">
+    <div class="tech-box">
+      <div class="box-title">指标已经提前预警</div>
+      <ul class="bullet-list">
+        <li>走势比刚才讲的那只要好一点</li>
+        <li>怀疑还会再往下打压一下，回补下方的缺口</li>
+        <li>这个位置还要再做一次底背离</li>
+        <li>股价还没有低于前低，但技术指标已经低于前低——起到提前预警：未来股价一定会跌破前期低点</li>
+        <li>现在不要去折腾它。半导体相关板块其实都需要一次回压洗盘</li>
+      </ul>
+    </div>
+    <div class="strategy-box">
+      <div class="box-title">为什么它能扛住</div>
+      <ul class="bullet-list">
+        <li>高位已经做过降仓，当时大幅减了一半</li>
+        <li>真的跌下来，只要手里有钱，肯定还会再加仓</li>
+        <li>凭什么能成为科创 50 第一大权重股？主要做半导体设备，研发周期长，现在需求量又特别大</li>
+        <li>基本面不会有大问题，只是短期面临调整</li>
+        <li>有些人买得比较晚，跌到这里受不了可能就止损了</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="slide">
+  <h3>▪ 华宝新能：启动时间还没到；光伏板块在避雷</h3>
+  <div class="img-pair">
+    <div>
+      <img src="Picture/华宝新能-15分钟-8.31.PNG" alt="华宝新能15分钟" class="chart-img">
+      <p class="img-caption">华宝新能 15 分钟：底背离后再度创新低</p>
+    </div>
+    <div>
+      <img src="Picture/华宝新能-60分钟-8.31.PNG" alt="华宝新能60分钟" class="chart-img">
+      <p class="img-caption">华宝新能 60 分钟：接近底部，仍可能再砸一下</p>
+    </div>
+  </div>
+  <div class="two-col">
+    <div class="tech-box">
+      <div class="box-title">结构</div>
+      <ul class="bullet-list">
+        <li>启动时间还没到</li>
+        <li>15 分钟前面那个底背离让它反弹了一下，现在股价又创了新低</li>
+        <li>60 分钟级别，至少还要再往下砸一下，然后再拉起来</li>
+        <li>指标已经非常接近底部了</li>
+      </ul>
+    </div>
+    <div class="danger-box">
+      <div class="box-title">投资避雷针</div>
+      <ul class="bullet-list">
+        <li>近期光伏板块基本面都不太好</li>
+        <li>不少公司减持，或利润同比大幅下降</li>
+        <li>隆基绿能：上半年净亏损 <span class="green">36.84 亿元</span></li>
+        <li>核电板块业绩也不太好；新莱应材利润也下降</li>
+        <li>生益电子：业绩波动非常大，觉得不太靠谱，后来不做了</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="slide">
+  <h3>▪ 润泽科技：下调超过 30%，现在不要买</h3>
+  <div class="img-pair">
+    <div>
+      <img src="Picture/润泽科技-日线-8.31.PNG" alt="润泽科技日线" class="chart-img">
+      <p class="img-caption">润泽科技日线</p>
+    </div>
+    <div>
+      <img src="Picture/润泽科技-15分钟-8.31.PNG" alt="润泽科技15分钟" class="chart-img">
+      <p class="img-caption">润泽科技 15 分钟：未见底背离</p>
+    </div>
+  </div>
+  <div class="two-col">
+    <div class="stock-box">
+      <div class="box-title">前面讲过，涨过，现在回调</div>
+      <ul class="bullet-list">
+        <li>做算力服务器。曾经股价过百元，这波下调幅度 <span class="green">30% 都不止</span></li>
+        <li>走完一波后现在回调到这里，还想进去？</li>
+        <li>15 分钟线没有出现底背离，从低点的上行也不是推动浪结构</li>
+        <li>这个时候不要买。下方缺口大概率是要补掉的</li>
+        <li>如果前期高位没有减仓，现在手里没钱也就没法回补了</li>
+      </ul>
+    </div>
+    <div class="strategy-box">
+      <div class="box-title">迅游科技</div>
+      <ul class="bullet-list">
+        <li>投资还得按节奏正常推进，慢有慢的好处</li>
+        <li>这波大行情是要做起来的</li>
+        <li>只要拿着筹码，喝着茶、看看书，不想看书就去睡觉，不要老去瞎折腾</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="slide">
+  <h3>▪ 月末这一根：大概率先拉缺口，再收阴线</h3>
+  <div class="two-col">
+    <div class="cycle-box">
+      <div class="box-title">今天走势有点诡异</div>
+      <ul class="bullet-list">
+        <li>上证指数早盘调整下来，下午没准主力会拉一拉，把上方的缺口给补了</li>
+        <li>前面的三波段结构已经走完</li>
+        <li>拉高补完缺口以后，再走下一笔下跌</li>
+        <li>今天刚好是月末，机构难道不要做月末净值管理吗？就任由它这么跌下去吗？</li>
+        <li>下午可以观察：大概率会朝上拉一拉，最终收一根阴线，这样走势在技术上比较完美</li>
+      </ul>
+    </div>
+    <div class="insight-box">
+      <div class="box-title">本期核心结论速查</div>
+      <ul class="bullet-list">
+        <li>沃什新规则：默认偏紧，举证反转，无指引无兜底</li>
+        <li>1 年期 +11bp、2 年期 +10bp；利差倒挂 0.83% 未变；TGA 仍高</li>
+        <li>4 万亿地产保底，高开低走，平台整理等第二笔</li>
+        <li>9 月中旬防范美股高位破位；仓位半仓以内，破位三成</li>
+        <li>融资余额 2.2619 万亿，成交远低于 8000 亿</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div id="ending" class="slide ending-slide">
+  <div class="cover-badge">私域直播 · 2026.08.31 · 莫大仙岳居</div>
+  <h2>不要像海草一样晃</h2>
+  <p style="max-width:800px;font-size:1.05em">
+    无指引、无预判、无政策兜底，所有盈亏自己扛。<br>
+    真实现金流的公司可以坐，高弹性品种反弹高位减。<br>
+    半仓都显得过重——这不是吓你，是这个环境里的老实话。<br><br>
+    <span class="gold">「买股票是千万不能着急的。」</span>
+  </p>
+  <div style="margin-top:22px">
+    <span class="tag-pill">沃什新规则</span>
+    <span class="tag-pill">举证反转·默认偏紧</span>
+    <span class="tag-pill">4万亿地产保底</span>
+    <span class="tag-pill">9月中旬窗口</span>
+    <span class="tag-pill">半仓以内</span>
+    <span class="tag-pill">缺口大概率要补</span>
+    <span class="tag-pill">集合竞价缩量到位</span>
+  </div>
+  <p class="muted" style="margin-top:28px">莫大仙岳居 · 2026年8月31日 · 于山东　|　V2.0 重构版<br>估计到 9 月 18 号之前都会留在山东，近期主要在休养。<br>本讲义仅为直播内容整理，不构成任何投资建议。</p>
+</div>
+
+<script>
+// 阅读进度条
+const bar=document.getElementById('progressBar');
+const scrollInd=document.getElementById('scrollIndicator');
+const secBtns=[...document.querySelectorAll('.quick-nav-btn[data-sec]')];
+const secIds=secBtns.map(b=>b.getAttribute('href').slice(1));
+function onScroll(){
+  const h=document.documentElement;
+  const sc=h.scrollTop, max=h.scrollHeight-h.clientHeight;
+  bar.style.width=(max>0?(sc/max*100):0)+'%';
+  scrollInd.style.opacity=sc>200?'0':'1';
+  // 高亮当前章节
+  let cur=-1, mid=sc+window.innerHeight*0.4;
+  secIds.forEach((id,i)=>{const el=document.getElementById(id); if(el&&el.offsetTop<=mid)cur=i;});
+  secBtns.forEach((b,i)=>b.classList.toggle('active',i===cur));
+}
+window.addEventListener('scroll',onScroll,{passive:true});
+window.addEventListener('resize',onScroll);
+onScroll();
+</script>
+
+</body>
+</html>
