@@ -59,21 +59,22 @@ research-dashboard/
 
 **前置检查**：先 `ls Research Report/<主题>/` 列出全部 .md 文件清单，再 `mkdir _synthesis`。
 
-**Kimi CLI 关键参数**（Windows 必须 `PYTHONUTF8=1` 否则 GBK 编码会崩）：
+**Kimi CLI 调用方式**（Kimi Code CLI 2.x，统一走 kimi-delegate 的 `kimi_run.py`；脚本已内置 UTF-8 与路径探测）：
 
 ```bash
-SID="<topic>-research-$(date +%s)"
-# 用 kimi-delegate skill 自带的 kimi_run.py（Windows 宽字符 + UTF8 + 候选路径探测）
+PY="C:/Users/Administrator/scoop/shims/python.exe"
+# 用 kimi-delegate skill 自带的 kimi_run.py（Windows 宽字符 + UTF8 + 候选路径探测 + 会话 ID 抓取）
 KIMI_RUN="C:/Users/Administrator/.claude/skills/kimi-delegate/scripts/kimi_run.py"
+SF="<topic_dir>/_synthesis/.kimi_session"   # 会话文件；要重新开局就先删掉它
 
-# 第 1 轮：让 Kimi 读完所有研报（仅确认，不输出）
-PYTHONUTF8=1 PYTHONIOENCODING=utf-8 python "$KIMI_RUN" \
-  -S "$SID" -w "<topic_dir>" -f "<topic_dir>/_synthesis/_p1_read.txt"
+# 第 1 轮：让 Kimi 读完所有研报（仅确认，不输出）；新建会话并把 ID 写入 $SF
+"$PY" "$KIMI_RUN" --session-file "$SF" -w "<topic_dir>" -f "<topic_dir>/_synthesis/_p1_read.txt"
 
-# 第 2-N 轮：同 SID 续会话产 _synthesis/01-05_*.md
-PYTHONUTF8=1 PYTHONIOENCODING=utf-8 python "$KIMI_RUN" \
-  -S "$SID" -w "<topic_dir>" -f "<topic_dir>/_synthesis/_p2_cost.txt" --timeout 2400
+# 第 2-N 轮：同一个会话文件续会话，产 _synthesis/01-05_*.md
+"$PY" "$KIMI_RUN" --session-file "$SF" -w "<topic_dir>" -f "<topic_dir>/_synthesis/_p2_cost.txt" --timeout 2400
 ```
+
+> Kimi 2.x 的会话 ID 只能由 Kimi 生成（`session_xxx`），**不能自编**；旧写法 `-S "<topic>-research-$(date +%s)"` 在 2.x 下会失败。`-S` 只用于续接一个已知的 `session_xxx`。
 
 **6 份 prompt 模板已内置在 skill 自带的 `references/prompts/` 下** —— 默认 6 份全跑（含 R6 卡口下钻），把 6 个 .txt 复制到项目 `_synthesis/` 下，按主题改 `{{TOPIC}}` `{{N_FILES}}` `{{CHOKE_HINTS}}` 等占位符：
 
@@ -93,11 +94,11 @@ cp "C:/Users/Administrator/.claude/skills/research-dashboard/references/prompts/
 | 5 | `_synthesis/04_行业白皮书.md` | `references/prompts/p5_whitepaper.txt` | 是 |
 | 6 | `_synthesis/05_卡口下钻.md` | `references/prompts/p6_serenity.txt` | **是（默认必跑）** |
 
-每轮使用 `run_in_background:true` 后**轮询输出文件落盘**——Kimi 实际写完文件后还会卡几分钟在 stdout 等待，看到目标 .md 大小达到预期（>15K）就 `TaskStop`，节省 5-10 分钟挂机时间。同 SID 跨轮串行，不要并发同 SID 调用。
+每轮使用 `run_in_background:true` 后**轮询输出文件落盘**——Kimi 实际写完文件后还会卡几分钟在 stdout 等待，看到目标 .md 大小达到预期（>15K）就 `TaskStop`，节省 5-10 分钟挂机时间。同一会话文件跨轮串行，不要并发调用同一会话。
 
 **Kimi CLI 关键陷阱**：
-- ❌ 不写 `PYTHONUTF8=1`：会因 `↔` `→` 等字符 GBK 崩溃
-- ❌ 不复用 SID：每轮重新读研报浪费时间和 token
+- ❌ 直接 bash 调 `kimi -p "中文..."`：会因 `↔` `→` 等字符 GBK 崩溃 → 一律走 `kimi_run.py`（已内置 UTF-8）
+- ❌ 自编会话 ID 传 `-S`，或每轮换会话：前者 2.x 直接失败，后者每轮重读研报浪费时间和 token → 全程同一个 `--session-file`
 - ❌ Prompt 里夹复杂 Unicode 字符（如 `↔` `≈`）：可能反向喂回时再次崩溃，用 ASCII 替代
 - ❌ 看到 kimi_run.py 报"超时"立即重试：先看目标文件是否已落盘，落了就当成功（Kimi 写完文件后会挂在 stdout，跟超时无关）
 - ✅ 每轮 prompt 末尾明确 `写入文件 _synthesis/0X_xxx.md`，让 Kimi 直接落盘
@@ -372,8 +373,8 @@ start '' 'xxx看板.html'
 - ❌ **跳过 Kimi 提炼直接让 Explore 读原始研报**：除非用户明确说"快速版/不要 Kimi"，默认走两阶段流程
 - ❌ **基于上次的看板做 patch 加新字段**：`replace` 的 anchor 文案稍微不同就静默失败，引用的变量没定义但 `--check` 通过，浏览器打开 Tab 空白。**永远从 skeleton 重生成**——一个 `_make.py` 把全部数据数组+占位符一次注入，不要分多步打补丁
 - ❌ **`node --check` 后就以为 OK**：`--check` 不查 ReferenceError；`${someVar}` 模板里引用未定义变量它不报。**必须用 `node -e "eval(全部 JS); renderCompanies()"` 实际跑一遍渲染函数**
-- ❌ **Kimi 调用不加 `PYTHONUTF8=1`**：Windows GBK 编码会因 `↔` 等字符崩溃
-- ❌ **Kimi 每轮换 SID**：浪费 token，必须用同一 session 续会话
+- ❌ **绕过 `kimi_run.py` 直接调 kimi**：Windows GBK 编码会因 `↔` 等字符崩溃
+- ❌ **Kimi 自编会话 ID 或每轮换会话**：2.x 不认自编 ID；换会话浪费 token。必须同一个 `--session-file` 续会话
 - ❌ **自己 Read 全部 _synthesis 文件**：交给 3 个 Explore agent 并行
 - ❌ 一只一只调 a-stock-data：写脚本批量拉，几秒搞定
 - ❌ 引入 React/Vue/Chart.js/CDN：违背"双击就开"原则

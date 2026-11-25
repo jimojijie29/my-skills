@@ -7,7 +7,7 @@
 
 | 文件 | 用途 | 占位符 |
 |------|------|--------|
-| `p1_read.txt` | R1 同 SID 读完所有 .md | `{{TOPIC}}` `{{N_FILES}}` |
+| `p1_read.txt` | R1 新建会话，读完所有 .md | `{{TOPIC}}` `{{N_FILES}}` |
 | `p2_cost.txt` | R2 → 01_成本结构.md | `{{TOPIC}}` `{{INTEGRATOR_HINT}}` |
 | `p3_parts.txt` | R3 → 02_零部件深度.md | `{{TOPIC}}` `{{ENV_LIST}}` |
 | `p4_companies.txt` | R4 → 03_标的画像.md | `{{TOPIC}}` `{{TICKER_HINTS}}` |
@@ -36,14 +36,20 @@
 
 ## 调用方式
 
-```bash
-# 1. R1 用 -p 直接传（短）
-kimi_run.py -S "<topic>-$(date +%s)" -w "<work_dir>" -p "$(cat p1_read.txt | sed 's/{{TOPIC}}/SST/' | sed 's/{{N_FILES}}/85/')"
+Kimi Code CLI 2.x，统一走 kimi-delegate 的 `kimi_run.py`（已内置 UTF-8）。会话 ID 由 Kimi 生成，用 `--session-file` 记录并自动续接，**不要自编 `-S` 名字**。
 
-# 2. R2-R6 长 prompt 写文件再传
-sed -i 's/{{TOPIC}}/SST/g; s/{{INTEGRATOR_HINT}}/金盘科技/Eaton/g' _synthesis/_p2_cost.txt
-PYTHONUTF8=1 PYTHONIOENCODING=utf-8 python kimi_run.py \
-  -S "<sid>" -w "<work_dir>" -f "<work_dir>/_synthesis/_p2_cost.txt" --timeout 2400
+```bash
+PY="C:/Users/Administrator/scoop/shims/python.exe"
+KIMI_RUN="C:/Users/Administrator/.claude/skills/kimi-delegate/scripts/kimi_run.py"
+SF="<work_dir>/_synthesis/.kimi_session"
+
+# 1. R1：填好占位符后传入，新建会话并写入 $SF
+sed -i 's/{{TOPIC}}/SST/g; s/{{N_FILES}}/85/g' _synthesis/_p1_read.txt
+"$PY" "$KIMI_RUN" --session-file "$SF" -w "<work_dir>" -f "<work_dir>/_synthesis/_p1_read.txt"
+
+# 2. R2-R6：同一个会话文件续会话（占位符值里含 / 时换用 | 作 sed 分隔符）
+sed -i 's|{{TOPIC}}|SST|g; s|{{INTEGRATOR_HINT}}|金盘科技 / Eaton|g' _synthesis/_p2_cost.txt
+"$PY" "$KIMI_RUN" --session-file "$SF" -w "<work_dir>" -f "<work_dir>/_synthesis/_p2_cost.txt" --timeout 2400
 ```
 
 ## 反模式
