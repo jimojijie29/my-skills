@@ -5,10 +5,10 @@
       "id": 0,
       "name": "explicit-delegation-multidoc",
       "prompt": "用 Kimi CLI 帮我把 C:\\Users\\Administrator\\.claude\\skills\\kimi-delegate-workspace\\fixtures\\evalA_explicit\\notes 下的几篇 .md 周会纪要读完，去重合并成一份 summary.md（放在 notes 同级目录），列出当前关键指标、共识结论和待办事项。",
-      "expected_output": "通过 Kimi CLI（kimi_run.py 或 kimi --quiet --afk）完成提炼，summary.md 落盘，内容正确去重合并（如良率最新=90%、电芯成本目标统一为0.35元/Wh、客户A/B、叠片是达成95%良率关键路径）。",
+      "expected_output": "通过 Kimi Code CLI（kimi_run.py 或 kimi -p）完成提炼，summary.md 落盘，内容正确去重合并（如良率最新=90%、电芯成本目标统一为0.35元/Wh、客户A/B、叠片是达成95%良率关键路径）。",
       "files": ["fixtures/evalA_explicit/notes/*.md"],
       "assertions": [
-        {"text": "实际调用了 Kimi CLI（transcript 含 kimi_run.py 或 kimi --quiet/--afk/-y）", "kind": "transcript"},
+        {"text": "实际调用了 Kimi Code CLI（transcript 含 kimi_run.py 或 kimi -p）", "kind": "transcript"},
         {"text": "生成了 summary.md 落盘文件", "kind": "file_exists"},
         {"text": "summary 正确反映最新良率 90%（而非只取某一周的旧值），体现了跨文件去重/取最新", "kind": "content"},
         {"text": "summary 含量产成本目标 0.35 元/Wh 且不与各周现价混淆", "kind": "content"},

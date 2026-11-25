@@ -8,22 +8,22 @@
 PY="C:/Users/Administrator/scoop/shims/python.exe"
 RUN="C:/Users/Administrator/.claude/skills/kimi-delegate/scripts/kimi_run.py"
 WD="D:/proj/原始材料"                 # Kimi 工作目录（输入在这，产物也写这）
-SID="proj-$($PY -c 'import time;print(int(time.time()))')"  # 全程一个 ID
+SF="$WD/_out/.kimi_session"           # 会话文件：全程一个，脚本自动存取会话 ID
 ```
 
-先 Glob 列出 `$WD/*.md` 文件清单（别用 ls），`mkdir -p "$WD/_out"`。
+先 Glob 列出 `$WD/*.md` 文件清单（别用 ls），`mkdir -p "$WD/_out"`。要重新开局（换一批输入）就先删 `$SF`。
 
 ## 轮 1：让 Kimi 吃进全部输入（不产出）
 
 ```bash
-"$PY" "$RUN" -S "$SID" -w "$WD" -p "你是资深领域分析员。请依次读完当前目录下所有 .md 文件\
+"$PY" "$RUN" --session-file "$SF" -w "$WD" -p "你是资深领域分析员。请依次读完当前目录下所有 .md 文件\
 （共 N 个），完整理解后只回复'已读完 N 个文件，核心主题：XXX'，不要做其他输出。\
 文件清单：1. a.md  2. b.md  3. c.md ..."
 ```
 
-用 `run_in_background: true` 起任务，`TaskOutput` block 等"已读完"回执。
+用 `run_in_background: true` 起任务，完成时会自动通知，看 stdout 的"已读完"回执。
 
-## 轮 2..N：同 SID 续会话，每轮产一份落盘
+## 轮 2..N：同一会话文件续会话，每轮产一份落盘
 
 每轮一个独立切面，prompt 末尾固定要求"写入文件 + 只回执"。示例 4 份（按领域改）：
 
@@ -35,12 +35,12 @@ SID="proj-$($PY -c 'import time;print(int(time.time()))')"  # 全程一个 ID
 | 5 | `_out/04_白皮书.md` | 执行摘要 / 演进 / 格局 / 风险催化 |
 
 ```bash
-"$PY" "$RUN" -S "$SID" -w "$WD" -p "基于已读全部内容，产出'总览'：一句话定位、\
+"$PY" "$RUN" --session-file "$SF" -w "$WD" -p "基于已读全部内容，产出'总览'：一句话定位、\
 关键数字徽章、3 条核心逻辑、4 阶段时间线。控制在 6-10 小节、200-600 行。\
 写入文件 _out/01_总览.md，完成后只回复'已写入 01_总览.md'。"
 ```
 
-逐轮串行（后一轮依赖会话状态，**不要并行同一个 SID**）。每轮 60-180s，后台 + 轮询。
+逐轮串行（后一轮依赖会话状态，**不要并行同一个会话**）。每轮 60-180s，后台 + 轮询。
 
 ## 消费产物：并行 Explore agent，别自己一份份读
 
@@ -60,4 +60,4 @@ Kimi 产物里的数字/编号/名称可能漂，关键字段用脚本二次核�
 
 - 产物目录 `_out/` **保留**，是下次迭代的中间资产，省一次 Kimi 全读。
 - 若 `_out/` 已存在且不需重炼，直接进"消费产物"步骤，跳过 Kimi 调用。
-- 要重炼：先删 `_out/` 再从轮 1 开始。
+- 要重炼：先删 `_out/`（连同里面的 `.kimi_session`）再从轮 1 开始。
