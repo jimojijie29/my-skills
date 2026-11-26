@@ -64,7 +64,7 @@
   - **配色规范**：行情涨跌严格按 A 股习惯，涨红跌绿。
 - **文件**：
   - `SKILL.md`：工作流与组件规范
-  - `KNOWLEDGE.md`：讲师用语、个股黑话、已完成讲义列表
+  - `KNOWLEDGE.md`：讲师用语与已完成讲义清单，仅保存在作者本地，不随仓库公开
   - `references/style-reference-V3.0.html`：默认样式模板（V2.0 为旧版）
   - `references/convert_images_template.py`：图片嵌入脚本模板
 
